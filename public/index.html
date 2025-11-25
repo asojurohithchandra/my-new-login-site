@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Sign Up</title>
+<style>
+  body { font-family: Arial; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f2f5; }
+  .container { background:white; padding:30px; border-radius:8px; width:300px; text-align:center; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+  input { width:90%; padding:10px; margin:10px 0; border-radius:4px; border:1px solid #ccc; }
+  button { width:95%; padding:10px; border:none; border-radius:4px; background:#007bff; color:white; cursor:pointer; }
+  button:hover { background:#0056b3; }
+  .error { color:red; font-size:14px; margin-top:5px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Login</h2>
+  <input type="text" id="loginUsername" placeholder="Username">
+  <input type="password" id="loginPassword" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div class="error" id="loginError"></div>
+
+  <hr>
+
+  <h2>Sign Up</h2>
+  <input type="text" id="signupUsername" placeholder="Username">
+  <input type="password" id="signupPassword" placeholder="Password">
+  <button onclick="signup()">Sign Up</button>
+  <div class="error" id="signupError"></div>
+</div>
+
+<script>
+async function login() {
+  const username = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  if (!username || !password) {
+    document.getElementById("loginError").textContent = "Enter username and password.";
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("Login successful!");
+      window.location.href = "dashboard.html";
+    } else {
+      document.getElementById("loginError").textContent = data.message;
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById("loginError").textContent = "Server error. Try again later.";
+  }
+}
+
+async function signup() {
+  const username = document.getElementById("signupUsername").value.trim();
+  const password = document.getElementById("signupPassword").value.trim();
+
+  if (!username || !password) {
+    document.getElementById("signupError").textContent = "Enter username and password.";
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("Sign-up successful! You can now login.");
+      document.getElementById("signupError").textContent = "";
+    } else {
+      document.getElementById("signupError").textContent = data.message;
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById("signupError").textContent = "Server error. Try again later.";
+  }
+}
+</script>
+
+</body>
+</html>
