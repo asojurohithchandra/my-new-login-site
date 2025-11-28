@@ -14,433 +14,375 @@
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background: #f4f5fb;
-      color: #111827;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 16px;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 720px;
     }
 
     .card {
       background: #ffffff;
-      border-radius: 18px;
+      width: 380px;
+      max-width: 100%;
+      border-radius: 16px;
       padding: 22px 22px 18px;
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
     }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .avatar.male   { background: #3b82f6; }
-    .avatar.female { background: #ec4899; }
-    .avatar.nonbinary { background: #8b5cf6; }
-    .avatar.unspecified { background: #9ca3af; }
-
-    .header-text-main {
-      font-size: 18px;
+    h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
       font-weight: 600;
     }
 
-    .header-text-sub {
-      font-size: 12px;
+    .subtitle {
+      margin-bottom: 16px;
+      font-size: 13px;
       color: #6b7280;
     }
 
-    .header-right {
+    .field-group {
+      margin-bottom: 12px;
+    }
+
+    .label-row {
       display: flex;
-      gap: 8px;
-    }
-
-    .ghost-btn, .primary-btn, .secondary-btn {
-      border-radius: 999px;
-      padding: 8px 14px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
       font-size: 13px;
-      border: 1px solid transparent;
-      cursor: pointer;
-    }
-
-    .ghost-btn {
-      border-color: #e5e7eb;
-      background: #ffffff;
-    }
-
-    .ghost-btn:hover {
-      background: #f9fafb;
-    }
-
-    .primary-btn {
-      background: #a3e635;
-      color: #111827;
-      font-weight: 600;
-      box-shadow: 0 8px 20px rgba(132, 204, 22, 0.4);
-    }
-
-    .primary-btn:hover {
-      background: #84cc16;
-    }
-
-    .secondary-btn {
-      background: #ffffff;
-      border-color: #d1d5db;
-    }
-
-    .secondary-btn:hover {
-      background: #f9fafb;
-    }
-
-    .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin: 14px 0 6px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px 14px;
-    }
-
-    @media (max-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .header {
-        align-items: flex-start;
-      }
-    }
-
-    .field-label {
-      font-size: 12px;
       color: #4b5563;
-      margin-bottom: 3px;
     }
 
-    .field {
+    .label-row span.secondary {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select {
       width: 100%;
-      padding: 8px 9px;
+      padding: 9px 10px;
       border-radius: 9px;
       border: 1px solid #d1d5db;
-      font-size: 13px;
+      font-size: 14px;
       outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .field:focus {
+    input:focus,
+    select:focus {
       border-color: #4f46e5;
       box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.12);
     }
 
-    .field[readonly] {
-      background: #f3f4f6;
+    input[readonly] {
+      background: #f9fafb;
       color: #6b7280;
     }
 
-    .radio-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 12px;
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
-    .radio-row label {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .helper {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .section-title {
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .password-note {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 10px 0;
+      border-radius: 999px;
+      border: none;
+      background: #22c55e;
+      color: #f9fafb;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: background 0.15s ease, box-shadow 0.12s ease, transform 0.08s ease;
+    }
+
+    .primary-btn:hover {
+      background: #16a34a;
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.32);
+      transform: translateY(-1px);
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 12px;
+      min-height: 16px;
+    }
+
+    .status.ok {
+      color: #16a34a;
+    }
+
+    .status.err {
+      color: #dc2626;
+    }
+
+    .small-link {
+      margin-top: 8px;
+      font-size: 12px;
+      text-align: center;
+      color: #4b5563;
+    }
+
+    .small-link a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
       cursor: pointer;
     }
 
-    .password-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px 10px;
-    }
-
-    @media (max-width: 640px) {
-      .password-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .footer-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .error {
-      min-height: 16px;
-      font-size: 12px;
-      color: #dc2626;
-      margin-top: 4px;
-    }
-
-    .success {
-      min-height: 16px;
-      font-size: 12px;
-      color: #16a34a;
-      margin-top: 4px;
-    }
-
-    .pill-email {
-      display: inline-block;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #eef2ff;
-      color: #4f46e5;
-      margin-top: 2px;
+    .small-link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="card">
-      <!-- Header -->
-      <div class="header">
-        <div class="header-left">
-          <div id="avatar" class="avatar unspecified">U</div>
-          <div>
-            <div class="header-text-main">Your Profile</div>
-            <div class="header-text-sub">
-              Update your basic info to personalize your experience.
-              <div id="emailPill" class="pill-email"></div>
-            </div>
-          </div>
-        </div>
-        <div class="header-right">
-          <button class="ghost-btn" onclick="goToMain()">Go to main page</button>
-        </div>
+  <div class="card">
+    <h2>Your Profile</h2>
+    <div class="subtitle">
+      We’ll use this info to personalize reviews for you.
+    </div>
+
+    <!-- Email (from login) -->
+    <div class="field-group">
+      <div class="label-row">
+        <span>Email</span>
+        <span class="secondary">Used as your login</span>
       </div>
+      <input type="email" id="email" readonly />
+    </div>
 
-      <!-- Basic info -->
-      <div class="section-title">Basic information</div>
-      <div class="form-grid">
-        <div>
-          <div class="field-label">Username</div>
-          <input id="displayName" class="field" type="text" placeholder="e.g., rohithc" />
+    <!-- Display + Full name -->
+    <div class="row-2 field-group">
+      <div>
+        <div class="label-row">
+          <span>Display name</span>
         </div>
-
-        <div>
-          <div class="field-label">Full name</div>
-          <input id="fullName" class="field" type="text" placeholder="Your full name" />
-        </div>
-
-        <div>
-          <div class="field-label">Email (login)</div>
-          <input id="emailField" class="field" type="email" readonly />
-        </div>
-
-        <div>
-          <div class="field-label">Date of birth</div>
-          <input id="dob" class="field" type="date" />
-        </div>
-
-        <div>
-          <div class="field-label">How do you identify?</div>
-          <div class="radio-row" id="genderGroup">
-            <label><input type="radio" name="gender" value="male" /> Male</label>
-            <label><input type="radio" name="gender" value="female" /> Female</label>
-            <label><input type="radio" name="gender" value="nonbinary" /> Non-binary</label>
-            <label><input type="radio" name="gender" value="unspecified" /> Not specified</label>
-          </div>
-        </div>
-
-        <div>
-          <div class="field-label">Profession</div>
-          <select id="profession" class="field">
-            <option value="">Select</option>
-            <option value="Student">Student</option>
-            <option value="Working professional">Working professional</option>
-            <option value="Business">Business / Entrepreneur</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="field-label">Company</div>
-          <input id="company" class="field" type="text" placeholder="e.g., NetApp, Microsoft" />
-        </div>
-
-        <div>
-          <div class="field-label">University</div>
-          <input id="university" class="field" type="text" placeholder="e.g., USC, UTD, ASU" />
-        </div>
+        <input type="text" id="displayName" placeholder="@rohith" />
       </div>
-
-      <div id="profileMessage" class="success"></div>
-      <div id="profileError" class="error"></div>
-
-      <!-- Password section -->
-      <div class="section-title" style="margin-top: 18px;">Change password</div>
-      <div class="password-grid">
-        <div>
-          <div class="field-label">Current password</div>
-          <input id="currentPassword" class="field" type="password" placeholder="Current password" />
+      <div>
+        <div class="label-row">
+          <span>Full name</span>
         </div>
-        <div>
-          <div class="field-label">New password</div>
-          <input id="newPassword" class="field" type="password" placeholder="New password" />
-        </div>
-        <div>
-          <div class="field-label">Confirm new password</div>
-          <input id="confirmPassword" class="field" type="password" placeholder="Repeat new password" />
-        </div>
+        <input type="text" id="fullName" placeholder="Rohith Chandra" />
       </div>
-      <div id="passwordMessage" class="success"></div>
-      <div id="passwordError" class="error"></div>
+    </div>
 
-      <!-- Footer buttons -->
-      <div class="footer-row">
-        <button class="secondary-btn" onclick="goToMain()">Skip and go to main page</button>
-        <button class="primary-btn" onclick="saveEverything()">Save profile & password</button>
+    <!-- DOB + Gender -->
+    <div class="row-2 field-group">
+      <div>
+        <div class="label-row">
+          <span>Date of birth</span>
+        </div>
+        <input type="date" id="dob" />
       </div>
+      <div>
+        <div class="label-row">
+          <span>How do you identify?</span>
+        </div>
+        <select id="gender">
+          <option value="unspecified">Prefer not to say</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="nonbinary">Non-binary</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Profession / company / university -->
+    <div class="row-2 field-group">
+      <div>
+        <div class="label-row">
+          <span>Profession</span>
+        </div>
+        <select id="profession">
+          <option value="">Select…</option>
+          <option value="student">Student</option>
+          <option value="working">Working professional</option>
+          <option value="business">Business owner</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <div class="label-row">
+          <span>Company</span>
+        </div>
+        <input type="text" id="company" placeholder="NetApp" />
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="label-row">
+        <span>University</span>
+      </div>
+      <input type="text" id="university" placeholder="USC, UT Dallas, etc." />
+      <div class="helper">Optional, but helps us show relevant reviews.</div>
+    </div>
+
+    <!-- Password section -->
+    <div class="section-title">Change password (optional)</div>
+    <div class="password-note">
+      Leave these blank if you don’t want to change your password.
+    </div>
+
+    <div class="field-group">
+      <div class="label-row">
+        <span>Current password</span>
+      </div>
+      <input type="password" id="currentPassword" placeholder="Current password" />
+    </div>
+
+    <div class="row-2 field-group">
+      <div>
+        <div class="label-row">
+          <span>New password</span>
+        </div>
+        <input type="password" id="newPassword" placeholder="New password" />
+      </div>
+      <div>
+        <div class="label-row">
+          <span>Confirm new</span>
+        </div>
+        <input type="password" id="confirmPassword" placeholder="Repeat new password" />
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="saveAndContinue()">Save & go to main page</button>
+
+    <div id="status" class="status"></div>
+
+    <div class="small-link">
+      Want to skip for now? <a onclick="goToMain()">Go to main page</a>
     </div>
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get("email");
+    let emailFromQuery = "";
 
-    const emailField = document.getElementById("emailField");
-    const emailPill = document.getElementById("emailPill");
-    const avatarEl = document.getElementById("avatar");
+    // Load email from query and prefill profile
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      emailFromQuery = params.get("email") || "";
+      const emailInput = document.getElementById("email");
 
-    const profileMessage = document.getElementById("profileMessage");
-    const profileError = document.getElementById("profileError");
-    const passwordMessage = document.getElementById("passwordMessage");
-    const passwordError = document.getElementById("passwordError");
-
-    function setAvatar(gender, fullName) {
-      let cls = "avatar ";
-      if (gender === "male") cls += "male";
-      else if (gender === "female") cls += "female";
-      else if (gender === "nonbinary") cls += "nonbinary";
-      else cls += "unspecified";
-
-      avatarEl.className = cls;
-
-      const initial = fullName && fullName.trim().length > 0
-        ? fullName.trim()[0].toUpperCase()
-        : "U";
-      avatarEl.textContent = initial;
-    }
-
-    function getSelectedGender() {
-      const radios = document.querySelectorAll('input[name="gender"]');
-      for (const r of radios) {
-        if (r.checked) return r.value;
+      if (emailFromQuery) {
+        emailInput.value = emailFromQuery;
+        fetchProfile(emailFromQuery);
+      } else {
+        emailInput.value = "";
+        setStatus("Missing email in URL. Please log in again.", true);
       }
-      return "unspecified";
+    });
+
+    function setStatus(msg, isError = false) {
+      const el = document.getElementById("status");
+      el.textContent = msg || "";
+      el.className = "status " + (isError ? "err" : "ok");
     }
 
-    function setSelectedGender(val) {
-      const radios = document.querySelectorAll('input[name="gender"]');
-      let matched = false;
-      radios.forEach(r => {
-        if (r.value === val) {
-          r.checked = true;
-          matched = true;
-        }
-      });
-      if (!matched) {
-        const unspecified = document.querySelector('input[name="gender"][value="unspecified"]');
-        if (unspecified) unspecified.checked = true;
-      }
-    }
-
-    function goToMain() {
-      window.location.href = "dashboard.html";
-    }
-
-    async function loadProfile() {
-      if (!email) {
-        emailField.value = "";
-        emailPill.textContent = "No email detected. Please log in again.";
-        profileError.textContent = "Missing email in URL. Try logging in again.";
-        return;
-      }
-
-      emailField.value = email;
-      emailPill.textContent = "Signed in as: " + email;
-
+    async function fetchProfile(username) {
       try {
-        const res = await fetch("/api/profile?username=" + encodeURIComponent(email));
+        const res = await fetch("/api/profile?username=" + encodeURIComponent(username));
         if (!res.ok) {
-          setAvatar("unspecified", "");
+          // 404 means new user — no prefill, just return silently
           return;
         }
         const data = await res.json();
-        if (!data.success || !data.profile) {
-          setAvatar("unspecified", "");
-          return;
-        }
+        if (!data.success || !data.profile) return;
 
         const p = data.profile;
         document.getElementById("displayName").value = p.displayName || "";
         document.getElementById("fullName").value = p.fullName || "";
         document.getElementById("dob").value = p.dateOfBirth || "";
-        document.getElementById("profession").value = p.profession || "";
+        document.getElementById("gender").value = p.gender || "unspecified";
         document.getElementById("company").value = p.company || "";
         document.getElementById("university").value = p.university || "";
-
-        const gender = p.gender || "unspecified";
-        setSelectedGender(gender);
-        setAvatar(gender, p.fullName || p.displayName || "");
+        document.getElementById("profession").value = p.profession || "";
       } catch (err) {
-        console.error(err);
-        setAvatar("unspecified", "");
+        console.error("Profile fetch error", err);
+        setStatus("Could not load profile. You can still edit and save.", true);
       }
     }
 
-    async function saveProfile() {
-      profileMessage.textContent = "";
-      profileError.textContent = "";
-
-      if (!email) {
-        profileError.textContent = "Missing email. Please log in again.";
-        return false;
+    function goToMain() {
+      if (!emailFromQuery) {
+        window.location.href = "dashboard.html";
+        return;
       }
+      window.location.href =
+        "dashboard.html?email=" + encodeURIComponent(emailFromQuery);
+    }
 
+    async function saveAndContinue() {
+      setStatus("");
+      const email = document.getElementById("email").value.trim();
       const displayName = document.getElementById("displayName").value.trim();
       const fullName = document.getElementById("fullName").value.trim();
       const dateOfBirth = document.getElementById("dob").value;
+      const gender = document.getElementById("gender").value;
       const profession = document.getElementById("profession").value;
       const company = document.getElementById("company").value.trim();
       const university = document.getElementById("university").value.trim();
-      const gender = getSelectedGender();
 
+      const currentPassword = document
+        .getElementById("currentPassword")
+        .value.trim();
+      const newPassword = document.getElementById("newPassword").value.trim();
+      const confirmPassword = document
+        .getElementById("confirmPassword")
+        .value.trim();
+
+      if (!email) {
+        setStatus("Missing email. Please log in again.", true);
+        return;
+      }
+
+      // Basic validation
+      if (!fullName) {
+        setStatus("Please enter your full name.", true);
+        return;
+      }
+
+      if (newPassword || confirmPassword || currentPassword) {
+        // If user wants to change password, all three must be filled
+        if (!currentPassword || !newPassword || !confirmPassword) {
+          setStatus("To change password, fill all three fields.", true);
+          return;
+        }
+        if (newPassword !== confirmPassword) {
+          setStatus("New passwords do not match.", true);
+          return;
+        }
+      }
+
+      // 1) Save profile
       try {
         const res = await fetch("/api/profile", {
           method: "POST",
@@ -451,112 +393,52 @@
             fullName,
             dateOfBirth,
             gender,
-            profession,
+            avatarType: gender, // for now avatar follows gender
             company,
             university,
-            avatarType: gender
+            profession
           })
         });
 
         const data = await res.json();
-        if (data.success) {
-          profileMessage.textContent = "Profile saved.";
-          profileError.textContent = "";
-          setAvatar(gender, fullName || displayName);
-          return true;
-        } else {
-          profileError.textContent = data.message || "Unable to save profile.";
-          profileMessage.textContent = "";
-          return false;
+        if (!data.success) {
+          setStatus(data.message || "Failed to save profile.", true);
+          return;
         }
       } catch (err) {
-        console.error(err);
-        profileError.textContent = "Server error. Try again.";
-        profileMessage.textContent = "";
-        return false;
-      }
-    }
-
-    async function changePassword() {
-      passwordMessage.textContent = "";
-      passwordError.textContent = "";
-
-      const currentPassword = document.getElementById("currentPassword").value;
-      const newPassword = document.getElementById("newPassword").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (!currentPassword && !newPassword && !confirmPassword) {
-        return true; // nothing to change, not an error
+        console.error("Profile save error", err);
+        setStatus("Server error saving profile.", true);
+        return;
       }
 
-      if (!currentPassword || !newPassword || !confirmPassword) {
-        passwordError.textContent = "To change password, fill all three fields.";
-        return false;
-      }
-
-      if (newPassword !== confirmPassword) {
-        passwordError.textContent = "New passwords do not match.";
-        return false;
-      }
-
-      if (!email) {
-        passwordError.textContent = "Missing email. Please log in again.";
-        return false;
-      }
-
-      try {
-        const res = await fetch("/api/change-password", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: email,
-            currentPassword,
-            newPassword
-          })
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          passwordMessage.textContent = "Password updated.";
-          passwordError.textContent = "";
-          document.getElementById("currentPassword").value = "";
-          document.getElementById("newPassword").value = "";
-          document.getElementById("confirmPassword").value = "";
-          return true;
-        } else {
-          passwordError.textContent = data.message || "Could not change password.";
-          passwordMessage.textContent = "";
-          return false;
+      // 2) Optionally change password
+      if (currentPassword && newPassword && confirmPassword) {
+        try {
+          const resPw = await fetch("/api/change-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: email,
+              currentPassword,
+              newPassword
+            })
+          });
+          const pwData = await resPw.json();
+          if (!pwData.success) {
+            setStatus(pwData.message || "Password change failed.", true);
+            return;
+          }
+        } catch (err) {
+          console.error("Password change error", err);
+          setStatus("Server error changing password.", true);
+          return;
         }
-      } catch (err) {
-        console.error(err);
-        passwordError.textContent = "Server error. Try again.";
-        passwordMessage.textContent = "";
-        return false;
       }
+
+      // 3) All good → go to main page
+      setStatus("Profile saved. Redirecting…", false);
+      goToMain();
     }
-
-    async function saveEverything() {
-      const profileOk = await saveProfile();
-      const passwordOk = await changePassword();
-
-      if (profileOk && passwordOk) {
-        // everything succeeded
-      }
-    }
-
-    // update avatar when user types name or changes gender
-    document.getElementById("fullName").addEventListener("input", () => {
-      setAvatar(getSelectedGender(), document.getElementById("fullName").value);
-    });
-    document.getElementById("displayName").addEventListener("input", () => {
-      setAvatar(getSelectedGender(), document.getElementById("fullName").value || document.getElementById("displayName").value);
-    });
-    document.getElementById("genderGroup").addEventListener("change", () => {
-      setAvatar(getSelectedGender(), document.getElementById("fullName").value || document.getElementById("displayName").value);
-    });
-
-    loadProfile();
   </script>
 </body>
 </html>
