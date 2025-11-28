@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Complete your profile – Project R</title>
+  <title>Your Profile – Project R</title>
 
   <style>
     * {
@@ -19,76 +19,90 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 720px;
     }
 
     .card {
       background: #ffffff;
-      width: 380px;
-      max-width: 95vw;
-      border-radius: 16px;
-      padding: 24px 22px 20px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+      border-radius: 18px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
     }
 
-    .title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 4px;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .subtitle {
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 16px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .email-pill {
-      font-size: 12px;
-      padding: 6px 10px;
+    .avatar {
+      width: 54px;
+      height: 54px;
       border-radius: 999px;
-      background: #f3f4ff;
-      color: #4f46e5;
-      display: inline-block;
-      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
     }
 
-    .field-label {
+    .avatar.male   { background: #3b82f6; }
+    .avatar.female { background: #ec4899; }
+    .avatar.nonbinary { background: #8b5cf6; }
+    .avatar.unspecified { background: #9ca3af; }
+
+    .header-text-main {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .header-text-sub {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ghost-btn, .primary-btn, .secondary-btn {
+      border-radius: 999px;
+      padding: 8px 14px;
       font-size: 13px;
-      margin-bottom: 4px;
-      color: #4b5563;
+      border: 1px solid transparent;
+      cursor: pointer;
     }
 
-    .field {
-      width: 100%;
-      padding: 9px 10px;
-      border-radius: 9px;
-      border: 1px solid #d1d5db;
-      font-size: 14px;
-      outline: none;
-      margin-bottom: 10px;
+    .ghost-btn {
+      border-color: #e5e7eb;
+      background: #ffffff;
     }
 
-    .field:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.1);
-    }
-
-    .row {
-      margin-bottom: 6px;
+    .ghost-btn:hover {
+      background: #f9fafb;
     }
 
     .primary-btn {
-      width: 100%;
-      padding: 10px 0;
-      border-radius: 999px;
-      border: none;
       background: #a3e635;
       color: #111827;
       font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 6px;
-      margin-bottom: 6px;
+      box-shadow: 0 8px 20px rgba(132, 204, 22, 0.4);
     }
 
     .primary-btn:hover {
@@ -96,17 +110,93 @@
     }
 
     .secondary-btn {
-      width: 100%;
-      padding: 9px 0;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
       background: #ffffff;
-      font-size: 13px;
-      cursor: pointer;
+      border-color: #d1d5db;
     }
 
     .secondary-btn:hover {
       background: #f9fafb;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 14px 0 6px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        align-items: flex-start;
+      }
+    }
+
+    .field-label {
+      font-size: 12px;
+      color: #4b5563;
+      margin-bottom: 3px;
+    }
+
+    .field {
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.12);
+    }
+
+    .field[readonly] {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .radio-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .radio-row label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .password-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px 10px;
+    }
+
+    @media (max-width: 640px) {
+      .password-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
     }
 
     .error {
@@ -116,89 +206,240 @@
       margin-top: 4px;
     }
 
-    .hint {
-      font-size: 11px;
-      color: #9ca3af;
+    .success {
+      min-height: 16px;
+      font-size: 12px;
+      color: #16a34a;
       margin-top: 4px;
+    }
+
+    .pill-email {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      margin-top: 2px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="title">Complete your profile</div>
-    <div class="subtitle">
-      Just a few quick details so we can personalize reviews for you.
+  <div class="page">
+    <div class="card">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <div id="avatar" class="avatar unspecified">U</div>
+          <div>
+            <div class="header-text-main">Your Profile</div>
+            <div class="header-text-sub">
+              Update your basic info to personalize your experience.
+              <div id="emailPill" class="pill-email"></div>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="ghost-btn" onclick="goToMain()">Go to main page</button>
+        </div>
+      </div>
+
+      <!-- Basic info -->
+      <div class="section-title">Basic information</div>
+      <div class="form-grid">
+        <div>
+          <div class="field-label">Username</div>
+          <input id="displayName" class="field" type="text" placeholder="e.g., rohithc" />
+        </div>
+
+        <div>
+          <div class="field-label">Full name</div>
+          <input id="fullName" class="field" type="text" placeholder="Your full name" />
+        </div>
+
+        <div>
+          <div class="field-label">Email (login)</div>
+          <input id="emailField" class="field" type="email" readonly />
+        </div>
+
+        <div>
+          <div class="field-label">Date of birth</div>
+          <input id="dob" class="field" type="date" />
+        </div>
+
+        <div>
+          <div class="field-label">How do you identify?</div>
+          <div class="radio-row" id="genderGroup">
+            <label><input type="radio" name="gender" value="male" /> Male</label>
+            <label><input type="radio" name="gender" value="female" /> Female</label>
+            <label><input type="radio" name="gender" value="nonbinary" /> Non-binary</label>
+            <label><input type="radio" name="gender" value="unspecified" /> Not specified</label>
+          </div>
+        </div>
+
+        <div>
+          <div class="field-label">Profession</div>
+          <select id="profession" class="field">
+            <option value="">Select</option>
+            <option value="Student">Student</option>
+            <option value="Working professional">Working professional</option>
+            <option value="Business">Business / Entrepreneur</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="field-label">Company</div>
+          <input id="company" class="field" type="text" placeholder="e.g., NetApp, Microsoft" />
+        </div>
+
+        <div>
+          <div class="field-label">University</div>
+          <input id="university" class="field" type="text" placeholder="e.g., USC, UTD, ASU" />
+        </div>
+      </div>
+
+      <div id="profileMessage" class="success"></div>
+      <div id="profileError" class="error"></div>
+
+      <!-- Password section -->
+      <div class="section-title" style="margin-top: 18px;">Change password</div>
+      <div class="password-grid">
+        <div>
+          <div class="field-label">Current password</div>
+          <input id="currentPassword" class="field" type="password" placeholder="Current password" />
+        </div>
+        <div>
+          <div class="field-label">New password</div>
+          <input id="newPassword" class="field" type="password" placeholder="New password" />
+        </div>
+        <div>
+          <div class="field-label">Confirm new password</div>
+          <input id="confirmPassword" class="field" type="password" placeholder="Repeat new password" />
+        </div>
+      </div>
+      <div id="passwordMessage" class="success"></div>
+      <div id="passwordError" class="error"></div>
+
+      <!-- Footer buttons -->
+      <div class="footer-row">
+        <button class="secondary-btn" onclick="goToMain()">Skip and go to main page</button>
+        <button class="primary-btn" onclick="saveEverything()">Save profile & password</button>
+      </div>
     </div>
-
-    <div id="emailPill" class="email-pill">Signed in as: loading…</div>
-
-    <div class="row">
-      <div class="field-label">Full name</div>
-      <input id="fullName" class="field" type="text" placeholder="e.g., Rohith Chandra" />
-    </div>
-
-    <div class="row">
-      <div class="field-label">Country / Region</div>
-      <input id="country" class="field" type="text" placeholder="e.g., India, United States" />
-    </div>
-
-    <div class="row">
-      <div class="field-label">Current status</div>
-      <select id="role" class="field">
-        <option value="">Select one</option>
-        <option value="Student">Student</option>
-        <option value="Working professional">Working professional</option>
-        <option value="Applicant">Applicant / planning to apply</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <div class="field-label">Interested in</div>
-      <input id="interests" class="field" type="text"
-             placeholder="e.g., MS CS, MBA, Data Science" />
-      <div class="hint">You can change this later.</div>
-    </div>
-
-    <button id="saveBtn" class="primary-btn" onclick="saveProfile()">Save & continue</button>
-    <button class="secondary-btn" onclick="skipProfile()">Skip for now</button>
-
-    <div id="error" class="error"></div>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email");
-    const emailPill = document.getElementById("emailPill");
-    const errorEl = document.getElementById("error");
-    const saveBtn = document.getElementById("saveBtn");
 
-    if (email) {
-      emailPill.textContent = "Signed in as: " + email;
-    } else {
-      emailPill.textContent = "Signed in user missing. Please log in again.";
-      saveBtn.disabled = true;
-      errorEl.textContent = "We couldn't detect who you are. Please log out and log in again.";
+    const emailField = document.getElementById("emailField");
+    const emailPill = document.getElementById("emailPill");
+    const avatarEl = document.getElementById("avatar");
+
+    const profileMessage = document.getElementById("profileMessage");
+    const profileError = document.getElementById("profileError");
+    const passwordMessage = document.getElementById("passwordMessage");
+    const passwordError = document.getElementById("passwordError");
+
+    function setAvatar(gender, fullName) {
+      let cls = "avatar ";
+      if (gender === "male") cls += "male";
+      else if (gender === "female") cls += "female";
+      else if (gender === "nonbinary") cls += "nonbinary";
+      else cls += "unspecified";
+
+      avatarEl.className = cls;
+
+      const initial = fullName && fullName.trim().length > 0
+        ? fullName.trim()[0].toUpperCase()
+        : "U";
+      avatarEl.textContent = initial;
     }
 
-    function skipProfile() {
+    function getSelectedGender() {
+      const radios = document.querySelectorAll('input[name="gender"]');
+      for (const r of radios) {
+        if (r.checked) return r.value;
+      }
+      return "unspecified";
+    }
+
+    function setSelectedGender(val) {
+      const radios = document.querySelectorAll('input[name="gender"]');
+      let matched = false;
+      radios.forEach(r => {
+        if (r.value === val) {
+          r.checked = true;
+          matched = true;
+        }
+      });
+      if (!matched) {
+        const unspecified = document.querySelector('input[name="gender"][value="unspecified"]');
+        if (unspecified) unspecified.checked = true;
+      }
+    }
+
+    function goToMain() {
       window.location.href = "dashboard.html";
     }
 
-    async function saveProfile() {
-      if (!email) return;
-
-      const fullName = document.getElementById("fullName").value.trim();
-      const country = document.getElementById("country").value.trim();
-      const role = document.getElementById("role").value;
-      const interests = document.getElementById("interests").value.trim();
-
-      errorEl.textContent = "";
-
-      if (!fullName || !country || !role) {
-        errorEl.textContent = "Please fill at least name, country, and status.";
+    async function loadProfile() {
+      if (!email) {
+        emailField.value = "";
+        emailPill.textContent = "No email detected. Please log in again.";
+        profileError.textContent = "Missing email in URL. Try logging in again.";
         return;
       }
+
+      emailField.value = email;
+      emailPill.textContent = "Signed in as: " + email;
+
+      try {
+        const res = await fetch("/api/profile?username=" + encodeURIComponent(email));
+        if (!res.ok) {
+          setAvatar("unspecified", "");
+          return;
+        }
+        const data = await res.json();
+        if (!data.success || !data.profile) {
+          setAvatar("unspecified", "");
+          return;
+        }
+
+        const p = data.profile;
+        document.getElementById("displayName").value = p.displayName || "";
+        document.getElementById("fullName").value = p.fullName || "";
+        document.getElementById("dob").value = p.dateOfBirth || "";
+        document.getElementById("profession").value = p.profession || "";
+        document.getElementById("company").value = p.company || "";
+        document.getElementById("university").value = p.university || "";
+
+        const gender = p.gender || "unspecified";
+        setSelectedGender(gender);
+        setAvatar(gender, p.fullName || p.displayName || "");
+      } catch (err) {
+        console.error(err);
+        setAvatar("unspecified", "");
+      }
+    }
+
+    async function saveProfile() {
+      profileMessage.textContent = "";
+      profileError.textContent = "";
+
+      if (!email) {
+        profileError.textContent = "Missing email. Please log in again.";
+        return false;
+      }
+
+      const displayName = document.getElementById("displayName").value.trim();
+      const fullName = document.getElementById("fullName").value.trim();
+      const dateOfBirth = document.getElementById("dob").value;
+      const profession = document.getElementById("profession").value;
+      const company = document.getElementById("company").value.trim();
+      const university = document.getElementById("university").value.trim();
+      const gender = getSelectedGender();
 
       try {
         const res = await fetch("/api/profile", {
@@ -206,24 +447,116 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             username: email,
+            displayName,
             fullName,
-            country,
-            role,
-            interests
+            dateOfBirth,
+            gender,
+            profession,
+            company,
+            university,
+            avatarType: gender
           })
         });
 
         const data = await res.json();
         if (data.success) {
-          window.location.href = "dashboard.html";
+          profileMessage.textContent = "Profile saved.";
+          profileError.textContent = "";
+          setAvatar(gender, fullName || displayName);
+          return true;
         } else {
-          errorEl.textContent = data.message || "Unable to save profile. Try again.";
+          profileError.textContent = data.message || "Unable to save profile.";
+          profileMessage.textContent = "";
+          return false;
         }
       } catch (err) {
         console.error(err);
-        errorEl.textContent = "Server error. Please try again later.";
+        profileError.textContent = "Server error. Try again.";
+        profileMessage.textContent = "";
+        return false;
       }
     }
+
+    async function changePassword() {
+      passwordMessage.textContent = "";
+      passwordError.textContent = "";
+
+      const currentPassword = document.getElementById("currentPassword").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!currentPassword && !newPassword && !confirmPassword) {
+        return true; // nothing to change, not an error
+      }
+
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        passwordError.textContent = "To change password, fill all three fields.";
+        return false;
+      }
+
+      if (newPassword !== confirmPassword) {
+        passwordError.textContent = "New passwords do not match.";
+        return false;
+      }
+
+      if (!email) {
+        passwordError.textContent = "Missing email. Please log in again.";
+        return false;
+      }
+
+      try {
+        const res = await fetch("/api/change-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: email,
+            currentPassword,
+            newPassword
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          passwordMessage.textContent = "Password updated.";
+          passwordError.textContent = "";
+          document.getElementById("currentPassword").value = "";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("confirmPassword").value = "";
+          return true;
+        } else {
+          passwordError.textContent = data.message || "Could not change password.";
+          passwordMessage.textContent = "";
+          return false;
+        }
+      } catch (err) {
+        console.error(err);
+        passwordError.textContent = "Server error. Try again.";
+        passwordMessage.textContent = "";
+        return false;
+      }
+    }
+
+    async function saveEverything() {
+      const profileOk = await saveProfile();
+      const passwordOk = await changePassword();
+
+      if (profileOk && passwordOk) {
+        // everything succeeded
+      }
+    }
+
+    // update avatar when user types name or changes gender
+    document.getElementById("fullName").addEventListener("input", () => {
+      setAvatar(getSelectedGender(), document.getElementById("fullName").value);
+    });
+    document.getElementById("displayName").addEventListener("input", () => {
+      setAvatar(getSelectedGender(), document.getElementById("fullName").value || document.getElementById("displayName").value);
+    });
+    document.getElementById("genderGroup").addEventListener("change", () => {
+      setAvatar(getSelectedGender(), document.getElementById("fullName").value || document.getElementById("displayName").value);
+    });
+
+    loadProfile();
   </script>
 </body>
 </html>

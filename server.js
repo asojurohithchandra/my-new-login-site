@@ -28,9 +28,23 @@ mongoose.connect(MONGODB_URI)
 
 // User schema and model
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  passwordHash: String
+  username: { type: String, unique: true },   // email used for login
+  passwordHash: String,
+
+  // profile fields
+  displayName: String,
+  fullName: String,
+  dateOfBirth: String,      // keep as string "YYYY-MM-DD" from <input type="date">
+  gender: String,           // "male", "female", "nonbinary", "unspecified"
+  avatarType: String,       // same as gender for now
+  company: String,
+  university: String,
+  profession: String,       // Student, Working professional, etc.
+
+  profileCompleted: { type: Boolean, default: false }
 }, { timestamps: true });
+
+
 
 const User = mongoose.model('User', userSchema);
 
@@ -74,6 +88,39 @@ app.post('/api/login', async (req, res) => {
     return res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
+// Save / update profile
+app.post('/api/profile', async (req, res) => {
+  const { username, fullName, country, role, interests } = req.body;
+
+  if (!username) {
+    return res.status(400).json({ success: false, message: 'Missing username (email).' });
+  }
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { username },
+      {
+        fullName,
+        country,
+        currentRole: role,
+        interests,
+        profileCompleted: true
+      },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.error('Profile update error:', err);
+    return res.status(500).json({ success: false, message: 'Server error.' });
+  }
+});
+
 
 // Serve frontend
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
