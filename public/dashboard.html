@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project R – Search</title>
+  <title>Project R – Reviews</title>
 
   <style>
     * {
@@ -13,188 +13,725 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: #1f2933; /* dark frame around the main panel */
+      background: #111827;
       color: #111827;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
-    /* Main panel (lime background) */
-    .panel {
-      background: #e7f26a; /* soft lime */
-      width: 100%;
-      max-width: 1300px;
-      min-height: 90vh;
-      position: relative;
-      padding: 18px 26px 40px;
+    .app-shell {
+      min-height: 100vh;
+      background: #111827;
+      padding: 12px;
+    }
+
+    .main-card {
+      background: #e6f56c;
+      border-radius: 0;
+      min-height: calc(100vh - 24px);
       display: flex;
       flex-direction: column;
+      padding: 14px 18px 16px;
     }
 
-    /* Top bar */
+    /* Header */
+
     .top-bar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .page-title {
+    .brand {
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .search-bar-wrapper {
+      flex: 1;
+      max-width: 520px;
+      display: flex;
+      justify-content: center;
+      order: 2;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 460px;
+      background: #f9fafb;
+      border-radius: 999px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+      background: transparent;
+    }
+
+    .search-icon {
+      margin-left: 6px;
+      cursor: pointer;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f9fafb;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+    }
+
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      .top-bar {
+        align-items: flex-start;
+      }
+      .search-bar-wrapper {
+        order: 3;
+        width: 100%;
+      }
+    }
+
+    /* Subject + tags row */
+
+    .subject-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(0, 2fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .subject-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .subject-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .subject-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .subject-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .verified-badge {
       font-size: 16px;
+    }
+
+    .rating-stars {
+      color: #facc15;
+      font-size: 16px;
+      margin-left: auto;
+      display: flex;
+      gap: 2px;
+    }
+
+    @media (max-width: 600px) {
+      .rating-stars {
+        margin-left: 0;
+      }
+    }
+
+    .subject-tag-pill {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e5edff;
+      color: #1d4ed8;
+      font-size: 12px;
       font-weight: 500;
     }
 
-    .top-left-nav {
-      font-size: 12px;
-      color: #374151;
-      margin-top: 4px;
-    }
-
-    .user-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .user-icon:hover {
-      background: #f3f4f6;
-    }
-
-    /* Center search area */
-    .center-area {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .search-wrapper {
-      width: 100%;
-      max-width: 650px;
+    .search-more-card {
       background: #ffffff;
+      border-radius: 18px;
+      padding: 12px 16px 10px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .search-more-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
       border-radius: 999px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .search-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 16px 22px;
-      font-size: 14px;
-      color: #374151;
-    }
-
-    .search-input::placeholder {
-      color: #9ca3af;
-    }
-
-    .search-divider {
-      width: 1px;
-      height: 32px;
-      background: #e5e7eb;
-    }
-
-    .mic-button {
-      width: 56px;
-      height: 100%;
-      border: none;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 5px 12px;
+      background: #e5edff;
+      color: #1d4ed8;
+      font-size: 12px;
       cursor: pointer;
-      font-size: 18px;
-      color: #4b5563;
+      border: none;
     }
 
-    .mic-button:hover {
-      background: #f9fafb;
+    .tag-pill.active {
+      background: #1d4ed8;
+      color: #ffffff;
     }
 
-    /* Footer */
-    .footer {
-      text-align: center;
+    /* Reviews layout */
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px 14px;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+    @media (max-width: 900px) {
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .review-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px 12px 8px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+      display: flex;
+      flex-direction: column;
+      min-height: 120px;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+      gap: 4px;
       font-size: 11px;
       color: #6b7280;
-      margin-top: 30px;
     }
 
-    .footer a {
+    .review-author {
+      font-weight: 500;
+      color: #1f2937;
+    }
+
+    .review-rating {
+      color: #facc15;
+      font-size: 13px;
+    }
+
+    .review-body {
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .review-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
       color: #6b7280;
-      text-decoration: none;
-      margin: 0 8px;
     }
 
-    .footer a:hover {
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: default;
+    }
+
+    .vote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+
+    .vote-btn span.arrow {
+      font-size: 10px;
+    }
+
+    .flag-link {
+      cursor: pointer;
       text-decoration: underline;
     }
 
-    @media (max-width: 700px) {
-      .panel {
-        padding: 14px 16px 30px;
-      }
+    /* Write review box */
 
-      .search-wrapper {
-        max-width: 100%;
+    .write-box-row {
+      margin-top: 8px;
+      margin-bottom: 0;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .write-box-row {
+        flex-direction: column;
+        align-items: stretch;
       }
+    }
+
+    .write-box {
+      flex: 1;
+      background: #fefce8;
+      border-radius: 999px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.25);
+    }
+
+    .write-input {
+      border: none;
+      outline: none;
+      flex: 1;
+      background: transparent;
+      font-size: 14px;
+    }
+
+    .post-btn {
+      min-width: 100px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      background: #67c5ff;
+      color: #0f172a;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .post-btn:hover {
+      background: #38bdf8;
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 11px;
+      color: #4b5563;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-links span {
+      cursor: pointer;
+    }
+
+    /* Toast */
+
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 14px;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 999px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="panel">
-    <!-- Top bar -->
-    <div class="top-bar">
-      <div>
-        <div class="page-title">Search</div>
-        <div class="top-left-nav">About</div>
-      </div>
-      <div class="user-icon" onclick="logout()" title="Log out">
-        ☺
-      </div>
-    </div>
+  <div class="app-shell">
+    <div class="main-card">
+      <!-- Top bar -->
+      <div class="top-bar">
+        <div class="brand">Project R</div>
 
-    <!-- Center search bar -->
-    <div class="center-area">
-      <div class="search-wrapper">
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Search Something..."
-        />
-        <div class="search-divider"></div>
-        <button class="mic-button" type="button" title="Voice search (coming soon)">
-          🎤
-        </button>
-      </div>
-    </div>
+        <div class="search-bar-wrapper">
+          <div class="search-bar">
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Search Something..."
+              oninput="handleSearch()"
+            />
+            <div class="search-icon" onclick="handleSearch()">🔍</div>
+          </div>
+        </div>
 
-    <!-- Footer -->
-    <div class="footer">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Contact</a>
-      <span>© Project R 2024</span>
+        <div class="user-pill" id="userPill">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div id="userEmail">Guest</div>
+        </div>
+      </div>
+
+      <!-- Subject + tags row -->
+      <div class="subject-row">
+        <div class="subject-card">
+          <div class="subject-title-row">
+            <div class="subject-title" id="subjectTitle">
+              University of Southern California
+            </div>
+            <div class="verified-badge">✔️</div>
+            <div class="rating-stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+          </div>
+          <div class="subject-tag-pill" id="subjectPrimaryTag">Football</div>
+        </div>
+
+        <div class="search-more-card">
+          <div class="search-more-title">Search more</div>
+          <div class="tag-list" id="tagList">
+            <!-- tags filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews grid -->
+      <div class="reviews-grid" id="reviewsGrid">
+        <!-- review cards rendered by JS -->
+      </div>
+
+      <!-- Write review -->
+      <div class="write-box-row">
+        <div class="write-box">
+          <input
+            id="writeInput"
+            class="write-input"
+            placeholder="Write Something..."
+          />
+        </div>
+        <button class="post-btn" onclick="postReview()">Post</button>
+      </div>
+
+      <div class="helper-row">
+        <div class="footer-links">
+          <span>Privacy</span>
+          <span>Terms</span>
+          <span>Contact</span>
+        </div>
+        <div>© Project R 2024</div>
+      </div>
     </div>
   </div>
 
+  <div id="toast" class="toast">Saved</div>
+
   <script>
-    function logout() {
-      // For now just go back to login page.
-      window.location.href = "index.html";
+    // --- fake data for now ---
+    const tags = [
+      "2023",
+      "2024",
+      "2025",
+      "CS",
+      "SIF",
+      "Annenberg",
+      "Viterbi",
+      "FT MBA",
+      "Part time MBA"
+    ];
+
+    const reviews = [
+      {
+        id: 1,
+        author: "satosaison",
+        hoursAgo: 7,
+        text:
+          "The Trojans, as they are known, have been a powerhouse in the NCAA, boasting numerous national championships, conference titles, and bowl game appearances.",
+        upvotes: 11000,
+        downvotes: 4000,
+        comments: 1281,
+        shares: 521,
+        rating: 5,
+        tag: "Football"
+      },
+      {
+        id: 2,
+        author: "satosaison",
+        hoursAgo: 2,
+        text:
+          "The team is known for its strong recruiting classes, often securing top-ranked high school athletes, which maintains their competitive edge in college football.",
+        upvotes: 10000,
+        downvotes: 3000,
+        comments: 132,
+        shares: 122,
+        rating: 5,
+        tag: "Football"
+      },
+      {
+        id: 3,
+        author: "avansariod",
+        hoursAgo: 9,
+        text:
+          "These issues have led to fluctuations in their performance over the years, but the program continues to rebuild and aim for excellence.",
+        upvotes: 3000,
+        downvotes: 10000,
+        comments: 3232,
+        shares: 423,
+        rating: 4,
+        tag: "CS"
+      },
+      {
+        id: 4,
+        author: "astrongmartin",
+        hoursAgo: 6,
+        text:
+          "The Trojans play their home games at the historic Los Angeles Memorial Coliseum, an iconic venue that adds to the grandeur of their football program.",
+        upvotes: 3000,
+        downvotes: 9000,
+        comments: 1233,
+        shares: 123,
+        rating: 4,
+        tag: "Football"
+      }
+    ];
+
+    let activeTag = null;
+    let searchText = "";
+    let reviewsState = JSON.parse(JSON.stringify(reviews)); // clone
+
+    // --- helpers ---
+
+    function formatCount(n) {
+      if (n >= 1000) return Math.round(n / 100) / 10 + "k";
+      return String(n);
     }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    // --- user pill (from email query param) ---
+
+    function initUserFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email");
+      const emailEl = document.getElementById("userEmail");
+      const avatarEl = document.getElementById("userAvatar");
+
+      if (email) {
+        emailEl.textContent = email;
+        const initial = email.trim()[0].toUpperCase();
+        avatarEl.textContent = initial;
+      } else {
+        emailEl.textContent = "Guest";
+        avatarEl.textContent = "U";
+      }
+    }
+
+    // --- tags ---
+
+    function renderTags() {
+      const tagListEl = document.getElementById("tagList");
+      tagListEl.innerHTML = "";
+      tags.forEach((tag) => {
+        const button = document.createElement("button");
+        button.className = "tag-pill" + (tag === activeTag ? " active" : "");
+        button.textContent = tag;
+        button.onclick = () => toggleTag(tag);
+        tagListEl.appendChild(button);
+      });
+    }
+
+    function toggleTag(tag) {
+      activeTag = activeTag === tag ? null : tag;
+      renderTags();
+      renderReviews();
+    }
+
+    // --- reviews ---
+
+    function getFilteredReviews() {
+      return reviewsState.filter((r) => {
+        const matchesTag = activeTag ? r.tag === activeTag || r.text.includes(activeTag) : true;
+        const matchesSearch = searchText
+          ? r.text.toLowerCase().includes(searchText) ||
+            r.author.toLowerCase().includes(searchText)
+          : true;
+        return matchesTag && matchesSearch;
+      });
+    }
+
+    function renderReviews() {
+      const container = document.getElementById("reviewsGrid");
+      container.innerHTML = "";
+
+      const list = getFilteredReviews();
+      if (list.length === 0) {
+        const empty = document.createElement("div");
+        empty.textContent = "No reviews yet. Be the first to post.";
+        empty.style.fontSize = "13px";
+        empty.style.color = "#4b5563";
+        container.appendChild(empty);
+        return;
+      }
+
+      list.forEach((r) => {
+        const card = document.createElement("div");
+        card.className = "review-card";
+
+        const top = document.createElement("div");
+        top.className = "review-top";
+        top.innerHTML =
+          `<div><span class="review-author">@${r.author}</span> · ${r.hoursAgo} hours ago</div>` +
+          `<div class="review-rating">${"★".repeat(r.rating)}</div>`;
+        card.appendChild(top);
+
+        const body = document.createElement("div");
+        body.className = "review-body";
+        body.textContent = r.text;
+        card.appendChild(body);
+
+        const footer = document.createElement("div");
+        footer.className = "review-footer";
+
+        const statsLeft = document.createElement("div");
+        statsLeft.className = "stats-row";
+
+        const up = document.createElement("div");
+        up.className = "vote-btn";
+        up.onclick = () => vote(r.id, "up");
+        up.innerHTML =
+          `<span class="arrow">▲</span><span>${formatCount(r.upvotes)} upvotes</span>`;
+
+        const down = document.createElement("div");
+        down.className = "vote-btn";
+        down.onclick = () => vote(r.id, "down");
+        down.innerHTML =
+          `<span class="arrow">▼</span><span>${formatCount(r.downvotes)} downvotes</span>`;
+
+        statsLeft.appendChild(up);
+        statsLeft.appendChild(down);
+
+        const statsRight = document.createElement("div");
+        statsRight.className = "stats-row";
+        statsRight.innerHTML =
+          `<div class="stat-pill">💬 ${formatCount(r.comments)}</div>` +
+          `<div class="stat-pill">↗ ${formatCount(r.shares)}</div>` +
+          `<div class="flag-link" onclick="flagReview()">Report</div>`;
+
+        footer.appendChild(statsLeft);
+        footer.appendChild(statsRight);
+
+        card.appendChild(footer);
+        container.appendChild(card);
+      });
+    }
+
+    function vote(id, type) {
+      const r = reviewsState.find((x) => x.id === id);
+      if (!r) return;
+      if (type === "up") r.upvotes += 1;
+      else r.downvotes += 1;
+      renderReviews();
+    }
+
+    function flagReview() {
+      showToast("Thanks, we’ll review this.");
+    }
+
+    // --- search & post ---
+
+    function handleSearch() {
+      const input = document.getElementById("searchInput");
+      searchText = (input.value || "").trim().toLowerCase();
+      renderReviews();
+    }
+
+    function postReview() {
+      const input = document.getElementById("writeInput");
+      const text = input.value.trim();
+      if (!text) {
+        showToast("Write something before posting.");
+        return;
+      }
+
+      // simple local add
+      reviewsState.unshift({
+        id: Date.now(),
+        author: "you",
+        hoursAgo: 0,
+        text,
+        upvotes: 0,
+        downvotes: 0,
+        comments: 0,
+        shares: 0,
+        rating: 5,
+        tag: activeTag || "General"
+      });
+
+      input.value = "";
+      renderReviews();
+      showToast("Review posted (local only for now).");
+    }
+
+    // --- init ---
+
+    function init() {
+      initUserFromQuery();
+      renderTags();
+      renderReviews();
+    }
+
+    init();
   </script>
 </body>
 </html>
