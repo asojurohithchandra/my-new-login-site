@@ -34,30 +34,32 @@ const userSchema = new mongoose.Schema({
   // profile fields
   displayName: String,
   fullName: String,
-  dateOfBirth: String,      // keep as string "YYYY-MM-DD" from <input type="date">
+  dateOfBirth: String,      // "YYYY-MM-DD"
   gender: String,           // "male", "female", "nonbinary", "unspecified"
-  avatarType: String,       // same as gender for now
+  avatarType: String,       // for now same as gender
   company: String,
   university: String,
-  profession: String,       // Student, Working professional, etc.
+  profession: String,       // Student, Working professional, Business, etc.
 
   profileCompleted: { type: Boolean, default: false }
 }, { timestamps: true });
 
-
-
 const User = mongoose.model('User', userSchema);
 
-// Routes
+// ---------- Auth routes ----------
 
 // Signup
 app.post('/api/signup', async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ success: false, message: 'Missing username or password' });
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: 'Missing username or password' });
+  }
 
   try {
     const existing = await User.findOne({ username });
-    if (existing) return res.status(409).json({ success: false, message: 'Username already exists' });
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'Username already exists' });
+    }
 
     const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({ username, passwordHash });
@@ -73,14 +75,20 @@ app.post('/api/signup', async (req, res) => {
 // Login
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ success: false, message: 'Missing username or password' });
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: 'Missing username or password' });
+  }
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.json({ success: false, message: 'Invalid username or password' });
+    if (!user) {
+      return res.json({ success: false, message: 'Invalid username or password' });
+    }
 
     const ok = await bcrypt.compare(password, user.passwordHash);
-    if (!ok) return res.json({ success: false, message: 'Invalid username or password' });
+    if (!ok) {
+      return res.json({ success: false, message: 'Invalid username or password' });
+    }
 
     return res.json({ success: true });
   } catch (err) {
@@ -89,22 +97,72 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// ---------- Profile routes ----------
+
+// Get profile
+app.get('/api/profile', async (req, res) => {
+  const { username } = req.query;
+  if (!username) {
+    return res.status(400).json({ success: false, message: 'Missing username.' });
+  }
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
+    return res.json({
+      success: true,
+      profile: {
+        email: user.username,
+        displayName: user.displayName || '',
+        fullName: user.fullName || '',
+        dateOfBirth: user.dateOfBirth || '',
+        gender: user.gender || 'unspecified',
+        avatarType: user.avatarType || '',
+        company: user.company || '',
+        university: user.university || '',
+        profession: user.profession || '',
+        profileCompleted: !!user.profileCompleted
+      }
+    });
+  } catch (err) {
+    console.error('Profile fetch error:', err);
+    return res.status(500).json({ success: false, message: 'Server error.' });
+  }
+});
+
 // Save / update profile
 app.post('/api/profile', async (req, res) => {
-  const { username, fullName, country, role, interests } = req.body;
+  const {
+    username,
+    displayName,
+    fullName,
+    dateOfBirth,
+    gender,
+    avatarType,
+    company,
+    university,
+    profession
+  } = req.body;
 
   if (!username) {
-    return res.status(400).json({ success: false, message: 'Missing username (email).' });
+    return res.status(400).json({ success: false, message: 'Missing username.' });
   }
 
   try {
     const user = await User.findOneAndUpdate(
       { username },
       {
+        displayName,
         fullName,
-        country,
-        currentRole: role,
-        interests,
+        dateOfBirth,
+        gender,
+        avatarType,
+        company,
+        university,
+        profession,
         profileCompleted: true
       },
       { new: true }
@@ -121,8 +179,40 @@ app.post('/api/profile', async (req, res) => {
   }
 });
 
+// Change password
+app.post('/api/change-password', async (req, res) => {
+  const { username, currentPassword, newPassword } = req.body;
 
-// Serve frontend
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+  if (!username || !currentPassword || !newPassword) {
+    return res.status(400).json({ success: false, message: 'Missing fields.' });
+  }
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
+    const ok = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!ok) {
+      return res.status(400).json({ success: false, message: 'Current password is incorrect.' });
+    }
+
+    const newHash = await bcrypt.hash(newPassword, 10);
+    user.passwordHash = newHash;
+    await user.save();
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.error('Change password error:', err);
+    return res.status(500).json({ success: false, message: 'Server error.' });
+  }
+});
+
+// ---------- Frontend ----------
+
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
