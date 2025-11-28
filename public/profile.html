@@ -6,40 +6,99 @@
   <title>Your Profile – Project R</title>
 
   <style>
+    :root {
+      --bg-main: #f4f5fb;
+      --accent-soft: #fef9c3;
+      --accent: #a3e635;
+      --accent-strong: #84cc16;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --input-border: #d1d5db;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --card-radius: 20px;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: #f4f5fb;
       min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #fefce8 0%, #f4f5fb 40%, #eef2ff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 16px;
+      color: var(--text-main);
     }
 
-    .card {
+    .shell {
+      width: 100%;
+      max-width: 960px;
+      background: rgba(15, 23, 42, 0.04);
+      border-radius: 32px;
+      padding: 12px;
+      box-shadow: 0 24px 55px rgba(15, 23, 42, 0.18);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 780px) {
+      .shell {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
+      .side {
+        display: none;
+      }
+    }
+
+    .main-card {
       background: #ffffff;
-      width: 380px;
-      max-width: 100%;
-      border-radius: 16px;
+      border-radius: var(--card-radius);
       padding: 22px 22px 18px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #4b5563;
+    }
+
+    .step-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4b5563;
+      font-size: 11px;
+      font-weight: 500;
     }
 
     h2 {
-      margin: 0 0 6px;
-      font-size: 22px;
-      font-weight: 600;
+      margin: 4px 0 4px;
+      font-size: 24px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
     }
 
     .subtitle {
       margin-bottom: 16px;
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-muted);
     }
 
     .field-group {
@@ -49,13 +108,13 @@
     .label-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: baseline;
       margin-bottom: 4px;
       font-size: 13px;
       color: #4b5563;
     }
 
-    .label-row span.secondary {
+    .label-row span.helper {
       font-size: 11px;
       color: #9ca3af;
     }
@@ -63,24 +122,27 @@
     input[type="text"],
     input[type="email"],
     input[type="date"],
+    input[type="password"],
     select {
       width: 100%;
       padding: 9px 10px;
       border-radius: 9px;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--input-border);
+      background: #f9fafb;
       font-size: 14px;
       outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
     input:focus,
     select:focus {
       border-color: #4f46e5;
-      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.12);
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.13);
+      background: #ffffff;
     }
 
     input[readonly] {
-      background: #f9fafb;
+      background: #f3f4f6;
       color: #6b7280;
     }
 
@@ -90,14 +152,14 @@
       gap: 10px;
     }
 
-    .helper {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 2px;
+    @media (max-width: 520px) {
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
     }
 
     .section-title {
-      margin-top: 12px;
+      margin-top: 14px;
       margin-bottom: 6px;
       font-size: 13px;
       font-weight: 600;
@@ -112,21 +174,21 @@
 
     .primary-btn {
       width: 100%;
-      padding: 10px 0;
+      padding: 11px 0;
       border-radius: 999px;
       border: none;
-      background: #22c55e;
-      color: #f9fafb;
+      background: var(--accent);
+      color: #052e16;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 4px;
+      margin-top: 6px;
       transition: background 0.15s ease, box-shadow 0.12s ease, transform 0.08s ease;
     }
 
     .primary-btn:hover {
-      background: #16a34a;
-      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.32);
+      background: var(--accent-strong);
+      box-shadow: 0 14px 26px rgba(132, 204, 22, 0.45);
       transform: translateY(-1px);
     }
 
@@ -137,18 +199,18 @@
     }
 
     .status.ok {
-      color: #16a34a;
+      color: var(--success);
     }
 
     .status.err {
-      color: #dc2626;
+      color: var(--danger);
     }
 
     .small-link {
       margin-top: 8px;
       font-size: 12px;
       text-align: center;
-      color: #4b5563;
+      color: var(--text-muted);
     }
 
     .small-link a {
@@ -161,132 +223,243 @@
     .small-link a:hover {
       text-decoration: underline;
     }
+
+    /* Right side “preview” area */
+    .side {
+      background: linear-gradient(135deg, #ecfccb 0%, #fef9c3 50%, #e0f2fe 100%);
+      border-radius: var(--card-radius);
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .side-top {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.9);
+      font-size: 12px;
+      color: #4b5563;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .avatar-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #f97316;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .side-title {
+      margin-top: 40px;
+      font-size: 18px;
+      font-weight: 600;
+      max-width: 260px;
+      line-height: 1.3;
+      color: #1f2937;
+    }
+
+    .side-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .side-badge {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.07);
+      font-size: 11px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .side-footer {
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 24px;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Your Profile</h2>
-    <div class="subtitle">
-      We’ll use this info to personalize reviews for you.
-    </div>
-
-    <!-- Email (from login) -->
-    <div class="field-group">
-      <div class="label-row">
-        <span>Email</span>
-        <span class="secondary">Used as your login</span>
+  <div class="shell">
+    <!-- MAIN PROFILE CARD -->
+    <div class="main-card">
+      <div class="header-row">
+        <div class="logo">Project R</div>
+        <div class="step-pill">Step 1 of 2 · Profile</div>
       </div>
-      <input type="email" id="email" readonly />
-    </div>
 
-    <!-- Display + Full name -->
-    <div class="row-2 field-group">
-      <div>
+      <h2>Your Profile</h2>
+      <div class="subtitle">
+        We’ll use this information to personalize subjects and reviews for you.
+      </div>
+
+      <!-- Email (from login) -->
+      <div class="field-group">
         <div class="label-row">
-          <span>Display name</span>
+          <span>Email</span>
+          <span class="helper">Used as your login</span>
         </div>
-        <input type="text" id="displayName" placeholder="@rohith" />
+        <input type="email" id="email" readonly />
       </div>
-      <div>
-        <div class="label-row">
-          <span>Full name</span>
+
+      <!-- Display + Full name -->
+      <div class="row-2 field-group">
+        <div>
+          <div class="label-row">
+            <span>Display name</span>
+          </div>
+          <input type="text" id="displayName" placeholder="@rohithc" />
         </div>
-        <input type="text" id="fullName" placeholder="Rohith Chandra" />
+        <div>
+          <div class="label-row">
+            <span>Full name</span>
+          </div>
+          <input type="text" id="fullName" placeholder="Rohith Chandra" />
+        </div>
+      </div>
+
+      <!-- DOB + Gender -->
+      <div class="row-2 field-group">
+        <div>
+          <div class="label-row">
+            <span>Date of birth</span>
+          </div>
+          <input type="date" id="dob" />
+        </div>
+        <div>
+          <div class="label-row">
+            <span>How do you identify?</span>
+          </div>
+          <select id="gender">
+            <option value="unspecified">Prefer not to say</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="nonbinary">Non-binary</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Profession / company / university -->
+      <div class="row-2 field-group">
+        <div>
+          <div class="label-row">
+            <span>Profession</span>
+          </div>
+          <select id="profession">
+            <option value="">Select…</option>
+            <option value="student">Student</option>
+            <option value="working">Working professional</option>
+            <option value="business">Business owner</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <div class="label-row">
+            <span>Company</span>
+          </div>
+          <input type="text" id="company" placeholder="NetApp / Amazon / USC" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="label-row">
+          <span>University</span>
+        </div>
+        <input type="text" id="university" placeholder="USC, UT Dallas, etc." />
+        <div class="helper">Optional, but helps us show relevant reviews.</div>
+      </div>
+
+      <!-- Password section -->
+      <div class="section-title">Change password (optional)</div>
+      <div class="password-note">
+        Leave these blank if you don't want to change your password.
+      </div>
+
+      <div class="field-group">
+        <div class="label-row">
+          <span>Current password</span>
+        </div>
+        <input type="password" id="currentPassword" placeholder="Current password" />
+      </div>
+
+      <div class="row-2 field-group">
+        <div>
+          <div class="label-row">
+            <span>New password</span>
+          </div>
+          <input type="password" id="newPassword" placeholder="New password" />
+        </div>
+        <div>
+          <div class="label-row">
+            <span>Confirm new</span>
+          </div>
+          <input type="password" id="confirmPassword" placeholder="Repeat new password" />
+        </div>
+      </div>
+
+      <button class="primary-btn" onclick="saveAndContinue()">Save &amp; go to main page</button>
+
+      <div id="status" class="status"></div>
+
+      <div class="small-link">
+        Want to skip for now?
+        <a onclick="goToMain()">Go to main page</a>
       </div>
     </div>
 
-    <!-- DOB + Gender -->
-    <div class="row-2 field-group">
-      <div>
-        <div class="label-row">
-          <span>Date of birth</span>
+    <!-- RIGHT SIDE PREVIEW / BRANDING -->
+    <div class="side">
+      <div class="side-top">
+        <div class="avatar-pill">
+          <div id="avatarCircle" class="avatar-circle">R</div>
+          <span id="avatarLabel">New reviewer</span>
         </div>
-        <input type="date" id="dob" />
       </div>
+
       <div>
-        <div class="label-row">
-          <span>How do you identify?</span>
+        <div class="side-title">
+          Tell us who you are and we’ll surface the most relevant reviews for you.
         </div>
-        <select id="gender">
-          <option value="unspecified">Prefer not to say</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="nonbinary">Non-binary</option>
-        </select>
-      </div>
-    </div>
 
-    <!-- Profession / company / university -->
-    <div class="row-2 field-group">
-      <div>
-        <div class="label-row">
-          <span>Profession</span>
+        <div class="side-badges">
+          <div class="side-badge">Universities</div>
+          <div class="side-badge">Companies</div>
+          <div class="side-badge">Cities</div>
+          <div class="side-badge">MBAs</div>
+          <div class="side-badge">Tech jobs</div>
+          <div class="side-badge">Neighborhoods</div>
         </div>
-        <select id="profession">
-          <option value="">Select…</option>
-          <option value="student">Student</option>
-          <option value="working">Working professional</option>
-          <option value="business">Business owner</option>
-          <option value="other">Other</option>
-        </select>
       </div>
-      <div>
-        <div class="label-row">
-          <span>Company</span>
-        </div>
-        <input type="text" id="company" placeholder="NetApp" />
+
+      <div class="side-footer">
+        Your profile details are private. We only use them to improve what you see in Project R.
       </div>
-    </div>
-
-    <div class="field-group">
-      <div class="label-row">
-        <span>University</span>
-      </div>
-      <input type="text" id="university" placeholder="USC, UT Dallas, etc." />
-      <div class="helper">Optional, but helps us show relevant reviews.</div>
-    </div>
-
-    <!-- Password section -->
-    <div class="section-title">Change password (optional)</div>
-    <div class="password-note">
-      Leave these blank if you don’t want to change your password.
-    </div>
-
-    <div class="field-group">
-      <div class="label-row">
-        <span>Current password</span>
-      </div>
-      <input type="password" id="currentPassword" placeholder="Current password" />
-    </div>
-
-    <div class="row-2 field-group">
-      <div>
-        <div class="label-row">
-          <span>New password</span>
-        </div>
-        <input type="password" id="newPassword" placeholder="New password" />
-      </div>
-      <div>
-        <div class="label-row">
-          <span>Confirm new</span>
-        </div>
-        <input type="password" id="confirmPassword" placeholder="Repeat new password" />
-      </div>
-    </div>
-
-    <button class="primary-btn" onclick="saveAndContinue()">Save & go to main page</button>
-
-    <div id="status" class="status"></div>
-
-    <div class="small-link">
-      Want to skip for now? <a onclick="goToMain()">Go to main page</a>
     </div>
   </div>
 
   <script>
     let emailFromQuery = "";
 
-    // Load email from query and prefill profile
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       emailFromQuery = params.get("email") || "";
@@ -299,7 +472,29 @@
         emailInput.value = "";
         setStatus("Missing email in URL. Please log in again.", true);
       }
+
+      syncAvatar(); // initial
+      document.getElementById("displayName").addEventListener("input", syncAvatar);
+      document.getElementById("fullName").addEventListener("input", syncAvatar);
     });
+
+    function syncAvatar() {
+      const display = document.getElementById("displayName").value.trim();
+      const full = document.getElementById("fullName").value.trim();
+      const circle = document.getElementById("avatarCircle");
+      const label = document.getElementById("avatarLabel");
+
+      const base = full || display || "R";
+      circle.textContent = base.charAt(0).toUpperCase();
+
+      if (full) {
+        label.textContent = full;
+      } else if (display) {
+        label.textContent = "@" + display;
+      } else {
+        label.textContent = "New reviewer";
+      }
+    }
 
     function setStatus(msg, isError = false) {
       const el = document.getElementById("status");
@@ -311,7 +506,7 @@
       try {
         const res = await fetch("/api/profile?username=" + encodeURIComponent(username));
         if (!res.ok) {
-          // 404 means new user — no prefill, just return silently
+          // 404 means new user — no prefill
           return;
         }
         const data = await res.json();
@@ -325,6 +520,8 @@
         document.getElementById("company").value = p.company || "";
         document.getElementById("university").value = p.university || "";
         document.getElementById("profession").value = p.profession || "";
+
+        syncAvatar();
       } catch (err) {
         console.error("Profile fetch error", err);
         setStatus("Could not load profile. You can still edit and save.", true);
@@ -364,14 +561,12 @@
         return;
       }
 
-      // Basic validation
       if (!fullName) {
         setStatus("Please enter your full name.", true);
         return;
       }
 
       if (newPassword || confirmPassword || currentPassword) {
-        // If user wants to change password, all three must be filled
         if (!currentPassword || !newPassword || !confirmPassword) {
           setStatus("To change password, fill all three fields.", true);
           return;
@@ -393,7 +588,7 @@
             fullName,
             dateOfBirth,
             gender,
-            avatarType: gender, // for now avatar follows gender
+            avatarType: gender,
             company,
             university,
             profession
@@ -435,7 +630,6 @@
         }
       }
 
-      // 3) All good → go to main page
       setStatus("Profile saved. Redirecting…", false);
       goToMain();
     }
