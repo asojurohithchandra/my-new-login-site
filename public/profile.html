@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete your profile – Project R</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f4f5fb;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 380px;
+      max-width: 95vw;
+      border-radius: 16px;
+      padding: 24px 22px 20px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .email-pill {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f3f4ff;
+      color: #4f46e5;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #4b5563;
+    }
+
+    .field {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    .field:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.1);
+    }
+
+    .row {
+      margin-bottom: 6px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 10px 0;
+      border-radius: 999px;
+      border: none;
+      background: #a3e635;
+      color: #111827;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .primary-btn:hover {
+      background: #84cc16;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 9px 0;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .secondary-btn:hover {
+      background: #f9fafb;
+    }
+
+    .error {
+      min-height: 16px;
+      font-size: 12px;
+      color: #dc2626;
+      margin-top: 4px;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">Complete your profile</div>
+    <div class="subtitle">
+      Just a few quick details so we can personalize reviews for you.
+    </div>
+
+    <div id="emailPill" class="email-pill">Signed in as: loading…</div>
+
+    <div class="row">
+      <div class="field-label">Full name</div>
+      <input id="fullName" class="field" type="text" placeholder="e.g., Rohith Chandra" />
+    </div>
+
+    <div class="row">
+      <div class="field-label">Country / Region</div>
+      <input id="country" class="field" type="text" placeholder="e.g., India, United States" />
+    </div>
+
+    <div class="row">
+      <div class="field-label">Current status</div>
+      <select id="role" class="field">
+        <option value="">Select one</option>
+        <option value="Student">Student</option>
+        <option value="Working professional">Working professional</option>
+        <option value="Applicant">Applicant / planning to apply</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="field-label">Interested in</div>
+      <input id="interests" class="field" type="text"
+             placeholder="e.g., MS CS, MBA, Data Science" />
+      <div class="hint">You can change this later.</div>
+    </div>
+
+    <button id="saveBtn" class="primary-btn" onclick="saveProfile()">Save & continue</button>
+    <button class="secondary-btn" onclick="skipProfile()">Skip for now</button>
+
+    <div id="error" class="error"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    const emailPill = document.getElementById("emailPill");
+    const errorEl = document.getElementById("error");
+    const saveBtn = document.getElementById("saveBtn");
+
+    if (email) {
+      emailPill.textContent = "Signed in as: " + email;
+    } else {
+      emailPill.textContent = "Signed in user missing. Please log in again.";
+      saveBtn.disabled = true;
+      errorEl.textContent = "We couldn't detect who you are. Please log out and log in again.";
+    }
+
+    function skipProfile() {
+      window.location.href = "dashboard.html";
+    }
+
+    async function saveProfile() {
+      if (!email) return;
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const country = document.getElementById("country").value.trim();
+      const role = document.getElementById("role").value;
+      const interests = document.getElementById("interests").value.trim();
+
+      errorEl.textContent = "";
+
+      if (!fullName || !country || !role) {
+        errorEl.textContent = "Please fill at least name, country, and status.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: email,
+            fullName,
+            country,
+            role,
+            interests
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = "dashboard.html";
+        } else {
+          errorEl.textContent = data.message || "Unable to save profile. Try again.";
+        }
+      } catch (err) {
+        console.error(err);
+        errorEl.textContent = "Server error. Please try again later.";
+      }
+    }
+  </script>
+</body>
+</html>
