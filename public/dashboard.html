@@ -132,6 +132,13 @@
 
     .top-bar {
       display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .top-bar-row {
+      display: flex;
       align-items: center;
       gap: 14px;
     }
@@ -182,87 +189,81 @@
       color: #9ca3af;
     }
 
-    /* Composer */
+    .search-status {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding-left: 4px;
+    }
 
-    .composer {
+    .search-status.valid {
+      color: #15803d;
+    }
+
+    .search-status.new {
+      color: #a16207;
+    }
+
+    .suggestions {
+      position: absolute;
+      top: 38px;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
       background: #ffffff;
-      border-radius: var(--card-radius);
-      padding: 14px 16px 13px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-      border: 1px solid rgba(209, 213, 219, 0.7);
-    }
-
-    .composer-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .composer-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .composer-sub {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .composer-area {
-      width: 100%;
       border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      padding: 10px 11px;
-      font-size: 14px;
-      resize: vertical;
-      min-height: 72px;
-      outline: none;
-      background: #f9fafb;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      border: 1px solid rgba(209, 213, 219, 0.7);
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.18);
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 10;
+      font-size: 13px;
     }
 
-    .composer-area:focus {
-      border-color: #4f46e5;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.09);
-    }
-
-    .composer-actions {
+    .suggestion-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: 8px;
-      gap: 10px;
-    }
-
-    .composer-tags {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .composer-btn {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: none;
-      background: var(--accent);
-      color: #052e16;
-      font-size: 14px;
-      font-weight: 600;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 11px;
       cursor: pointer;
-      transition: background 0.15s ease, box-shadow 0.12s ease, transform 0.08s ease;
     }
 
-    .composer-btn:hover {
-      background: var(--accent-strong);
-      box-shadow: 0 8px 18px rgba(132, 204, 22, 0.4);
-      transform: translateY(-1px);
+    .suggestion-item:not(:last-child) {
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .suggestion-item:hover {
+      background: #f9fafb;
+    }
+
+    .suggestion-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .suggestion-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .suggestion-icon {
+      font-size: 13px;
+    }
+
+    .suggestion-create {
+      background: #fefce8;
     }
 
     /* Feed */
 
     .feed {
-      margin-top: 4px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -408,53 +409,40 @@
 
       <div class="sidebar-footer">
         Project R · Early prototype<br />
-        Reviews are for testing only.
+        Search a subject to get started.
       </div>
     </aside>
 
     <!-- MAIN COLUMN -->
     <main class="main">
+      <!-- Top search for subjects -->
       <header class="top-bar">
-        <div class="top-logo-mobile">Project R</div>
-        <div class="search-wrapper">
-          <input
-            id="searchInput"
-            class="search-input"
-            type="text"
-            placeholder="Search subjects, universities, companies..."
-          />
-          <span class="search-icon">🔍</span>
+        <div class="top-bar-row">
+          <div class="top-logo-mobile">Project R</div>
+          <div class="search-wrapper">
+            <input
+              id="searchInput"
+              class="search-input"
+              type="text"
+              placeholder="Search subjects (e.g., USC, Stanford, UT Austin)..."
+              autocomplete="off"
+            />
+            <span class="search-icon">🔍</span>
+
+            <!-- suggestions dropdown -->
+            <div id="suggestions" class="suggestions" style="display:none;"></div>
+          </div>
+        </div>
+        <div id="searchStatus" class="search-status">
+          Type to search known subjects. Valid subjects have a ✓. You can also create a new subject.
         </div>
       </header>
 
-      <!-- Write review composer -->
-      <section class="composer">
-        <div class="composer-title-row">
-          <div>
-            <div class="composer-title">Write a review</div>
-            <div class="composer-sub">Share your experience about any university, company, city, course, or place.</div>
-          </div>
-        </div>
-
-        <textarea
-          id="reviewText"
-          class="composer-area"
-          placeholder="Example: USC MBA – great peer group, strong tech recruiting, but housing is expensive..."
-        ></textarea>
-
-        <div class="composer-actions">
-          <div class="composer-tags">
-            Tip: be specific – mention year, program, role, or location.
-          </div>
-          <button class="composer-btn" onclick="postReview()">Post</button>
-        </div>
-      </section>
-
-      <!-- Feed -->
+      <!-- Feed placeholder -->
       <section class="feed" id="feed">
-        <div class="feed-placeholder">
-          Your reviews and community posts will appear here. For now, this is just a
-          placeholder section – when we add the backend for posts, they’ll be rendered in this area.
+        <div class="feed-placeholder" id="feedPlaceholder">
+          After you pick a subject, future versions will show its reviews here (top posts, latest, pros/cons etc.).
+          For now this is just a placeholder area.
         </div>
       </section>
     </main>
@@ -476,20 +464,56 @@
         </div>
 
         <div class="right-caption">
-          We’ll later show your stats here: number of reviews, upvotes and saved posts.
+          In later versions we’ll show your stats here – subjects reviewed, upvotes and saved posts.
         </div>
       </div>
     </aside>
   </div>
 
   <script>
-    let currentEmail = "";
+    // Top 30 universities as valid subjects
+    const SUBJECTS = [
+      "Harvard University",
+      "Stanford University",
+      "Massachusetts Institute of Technology",
+      "University of California, Berkeley",
+      "University of Oxford",
+      "University of Cambridge",
+      "California Institute of Technology",
+      "Princeton University",
+      "Yale University",
+      "Columbia University",
+      "University of Chicago",
+      "University of Pennsylvania",
+      "Cornell University",
+      "University of California, Los Angeles",
+      "University of Michigan – Ann Arbor",
+      "New York University",
+      "University of Texas at Austin",
+      "Carnegie Mellon University",
+      "Duke University",
+      "Northwestern University",
+      "University of Washington",
+      "University of Southern California",
+      "Georgia Institute of Technology",
+      "University of Illinois Urbana-Champaign",
+      "University of Toronto",
+      "ETH Zurich",
+      "National University of Singapore",
+      "University of British Columbia",
+      "London School of Economics",
+      "University College London"
+    ];
 
-    // Read ?email= from URL and update profile pill
+    let currentEmail = "";
+    let currentSubject = "";
+
+    // Setup on load
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       currentEmail = params.get("email") || "";
 
+      // Profile info
       const emailEl = document.getElementById("profileEmail");
       const nameEl = document.getElementById("profileName");
       const avatarEl = document.getElementById("avatar");
@@ -498,7 +522,6 @@
         emailEl.textContent = currentEmail;
         const namePart = currentEmail.split("@")[0];
         nameEl.textContent = namePart || "Reviewer";
-
         const letter = (namePart || "R").charAt(0).toUpperCase();
         avatarEl.textContent = letter;
       } else {
@@ -506,7 +529,133 @@
         nameEl.textContent = "Guest";
         avatarEl.textContent = "G";
       }
+
+      // Search events
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("input", handleSearchInput);
+      searchInput.addEventListener("focus", handleSearchInput);
+      document.addEventListener("click", (e) => {
+        const suggestions = document.getElementById("suggestions");
+        const wrapper = document.querySelector(".search-wrapper");
+        if (!wrapper.contains(e.target)) {
+          suggestions.style.display = "none";
+        }
+      });
     });
+
+    function normalize(str) {
+      return str.trim().toLowerCase();
+    }
+
+    function handleSearchInput() {
+      const query = document.getElementById("searchInput").value;
+      const suggestionsEl = document.getElementById("suggestions");
+      const statusEl = document.getElementById("searchStatus");
+
+      const trimmed = query.trim();
+      const norm = normalize(trimmed);
+
+      // Filter valid subjects
+      let matches = [];
+      if (norm) {
+        matches = SUBJECTS.filter((s) => normalize(s).includes(norm));
+      } else {
+        // when empty, show top subjects
+        matches = SUBJECTS.slice(0, 6);
+      }
+
+      const exact = SUBJECTS.find((s) => normalize(s) === norm);
+
+      // Update status line
+      if (!trimmed) {
+        statusEl.textContent =
+          "Type to search known subjects. Valid subjects have a ✓. You can also create a new subject.";
+        statusEl.className = "search-status";
+      } else if (exact) {
+        statusEl.textContent = `Valid subject ✓ "${exact}"`;
+        statusEl.className = "search-status valid";
+      } else {
+        statusEl.textContent = `New subject – not in list yet. You can create it.`;
+        statusEl.className = "search-status new";
+      }
+
+      // Build suggestions dropdown
+      suggestionsEl.innerHTML = "";
+
+      if (matches.length === 0 && !trimmed) {
+        suggestionsEl.style.display = "none";
+        return;
+      }
+
+      matches.forEach((subj) => {
+        const item = document.createElement("div");
+        item.className = "suggestion-item";
+        item.onclick = () => selectSubject(subj, true);
+
+        const label = document.createElement("div");
+        label.className = "suggestion-label";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = subj;
+        const tag = document.createElement("span");
+        tag.className = "suggestion-tag";
+        tag.textContent = "valid";
+        label.appendChild(nameSpan);
+        label.appendChild(tag);
+
+        const icon = document.createElement("span");
+        icon.className = "suggestion-icon";
+        icon.textContent = "✓";
+
+        item.appendChild(label);
+        item.appendChild(icon);
+        suggestionsEl.appendChild(item);
+      });
+
+      // Create-subject row
+      if (trimmed && !exact) {
+        const createItem = document.createElement("div");
+        createItem.className = "suggestion-item suggestion-create";
+        createItem.onclick = () => selectSubject(trimmed, false);
+
+        const label = document.createElement("div");
+        label.className = "suggestion-label";
+        const textSpan = document.createElement("span");
+        textSpan.textContent = `Create new subject: "${trimmed}"`;
+        label.appendChild(textSpan);
+
+        const icon = document.createElement("span");
+        icon.className = "suggestion-icon";
+        icon.textContent = "➕";
+
+        createItem.appendChild(label);
+        createItem.appendChild(icon);
+        suggestionsEl.appendChild(createItem);
+      }
+
+      suggestionsEl.style.display = "block";
+    }
+
+    function selectSubject(name, isValid) {
+      currentSubject = name;
+      const input = document.getElementById("searchInput");
+      const suggestionsEl = document.getElementById("suggestions");
+      const statusEl = document.getElementById("searchStatus");
+      const placeholderFeed = document.getElementById("feedPlaceholder");
+
+      input.value = name;
+      suggestionsEl.style.display = "none";
+
+      if (isValid) {
+        statusEl.textContent = `Valid subject ✓ "${name}" selected. (Later we'll load its reviews here.)`;
+        statusEl.className = "search-status valid";
+      } else {
+        statusEl.textContent = `New subject "${name}" created locally. In future this will be saved to the database.`;
+        statusEl.className = "search-status new";
+      }
+
+      placeholderFeed.textContent =
+        `You selected the subject "${name}". In the full version, this area will show its reviews, ratings, and tags.`;
+    }
 
     function goToProfile() {
       if (!currentEmail) {
@@ -518,20 +667,7 @@
     }
 
     function logout() {
-      // For now just redirect back to login page
       window.location.href = "index.html";
-    }
-
-    function postReview() {
-      const text = document.getElementById("reviewText").value.trim();
-      if (!text) {
-        alert("Please write something before posting.");
-        return;
-      }
-
-      // For now, just show a simple confirmation and clear the box.
-      alert("Thanks! In the full version, this would create a review post.");
-      document.getElementById("reviewText").value = "";
     }
   </script>
 </body>
