@@ -14,7 +14,6 @@
       --text-main: #111827;
       --text-muted: #6b7280;
       --nav-bg: #111827;
-      --nav-active: #e5ff7a;
       --border-subtle: #e5e7eb;
       --card-radius: 16px;
     }
@@ -260,13 +259,10 @@
       background: #fefce8;
     }
 
-    /* Feed */
+    /* Subject view / feed */
 
     .feed {
       margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
     }
 
     .feed-placeholder {
@@ -276,6 +272,253 @@
       border: 1px dashed rgba(148, 163, 184, 0.7);
       font-size: 13px;
       color: #6b7280;
+    }
+
+    .subject-card {
+      background: #ffffff;
+      border-radius: var(--card-radius);
+      padding: 16px 18px 14px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.15);
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      margin-bottom: 14px;
+    }
+
+    .subject-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .subject-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .subject-name {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .subject-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .badge-verified {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #ecfdf3;
+      color: #16a34a;
+      font-weight: 500;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-unverified {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 500;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .subject-stars {
+      color: #fbbf24;
+      font-size: 18px;
+    }
+
+    .validation-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+    }
+
+    .btn-validate {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #f59e0b;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-validate:hover {
+      background: #fbbf24;
+      color: #78350f;
+    }
+
+    .validation-msg {
+      font-size: 11px;
+      color: #6b7280;
+      max-width: 180px;
+      text-align: right;
+    }
+
+    /* Reviews list */
+
+    .reviews-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 4px 2px 8px;
+      color: #4b5563;
+    }
+
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .review-card {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+
+    .review-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .review-stars {
+      color: #fbbf24;
+      font-size: 13px;
+    }
+
+    .review-time {
+      font-size: 11px;
+    }
+
+    .review-text {
+      font-size: 13px;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    .review-empty {
+      font-size: 12px;
+      color: #9ca3af;
+      padding: 6px 2px 10px;
+    }
+
+    /* Write review */
+
+    .write-review-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+      margin: 4px 0 6px;
+    }
+
+    .write-review-toggle:hover {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+    }
+
+    .write-review-card {
+      margin-top: 4px;
+      padding: 16px 18px 14px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+      display: none;
+    }
+
+    .write-stars-row {
+      text-align: center;
+      margin-bottom: 12px;
+      color: #fbbf24;
+      font-size: 20px;
+    }
+
+    .write-textarea-wrapper {
+      background: #f5f5f6;
+      border-radius: 18px;
+      padding: 14px 18px 10px;
+      margin-bottom: 8px;
+    }
+
+    .write-textarea {
+      width: 100%;
+      border: none;
+      resize: vertical;
+      min-height: 90px;
+      max-height: 220px;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: #111827;
+      background: transparent;
+    }
+
+    .write-toolbar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .write-toolbar {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .write-toolbar span {
+      cursor: default;
+    }
+
+    .write-post-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background: #38bdf8;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+    }
+
+    .write-post-btn:hover {
+      background: #0284c7;
+    }
+
+    .write-error {
+      font-size: 12px;
+      color: #b91c1c;
+      margin-top: 6px;
     }
 
     /* Right panel */
@@ -428,8 +671,6 @@
               autocomplete="off"
             />
             <span class="search-icon">🔍</span>
-
-            <!-- suggestions dropdown -->
             <div id="suggestions" class="suggestions" style="display:none;"></div>
           </div>
         </div>
@@ -438,11 +679,11 @@
         </div>
       </header>
 
-      <!-- Feed placeholder -->
-      <section class="feed" id="feed">
-        <div class="feed-placeholder" id="feedPlaceholder">
-          After you pick a subject, future versions will show its reviews here (top posts, latest, pros/cons etc.).
-          For now this is just a placeholder area.
+      <!-- Subject / feed area -->
+      <section class="feed">
+        <div id="feedContent" class="feed-placeholder">
+          After you pick a subject, its review page will appear here. For valid subjects you’ll see a verified badge; new
+          subjects can be submitted for validation and reviewed.
         </div>
       </section>
     </main>
@@ -470,205 +711,366 @@
     </aside>
   </div>
 
-<script>
-  // Top 30 universities as valid subjects
-  const SUBJECTS = [
-    "Harvard University",
-    "Stanford University",
-    "Massachusetts Institute of Technology",
-    "University of California, Berkeley",
-    "University of Oxford",
-    "University of Cambridge",
-    "California Institute of Technology",
-    "Princeton University",
-    "Yale University",
-    "Columbia University",
-    "University of Chicago",
-    "University of Pennsylvania",
-    "Cornell University",
-    "University of California, Los Angeles",
-    "University of Michigan – Ann Arbor",
-    "New York University",
-    "University of Texas at Austin",
-    "Carnegie Mellon University",
-    "Duke University",
-    "Northwestern University",
-    "University of Washington",
-    "University of Southern California",
-    "Georgia Institute of Technology",
-    "University of Illinois Urbana-Champaign",
-    "University of Toronto",
-    "ETH Zurich",
-    "National University of Singapore",
-    "University of British Columbia",
-    "London School of Economics",
-    "University College London"
-  ];
+  <script>
+    // Top 30 universities as valid subjects
+    const SUBJECTS = [
+      "Harvard University",
+      "Stanford University",
+      "Massachusetts Institute of Technology",
+      "University of California, Berkeley",
+      "University of Oxford",
+      "University of Cambridge",
+      "California Institute of Technology",
+      "Princeton University",
+      "Yale University",
+      "Columbia University",
+      "University of Chicago",
+      "University of Pennsylvania",
+      "Cornell University",
+      "University of California, Los Angeles",
+      "University of Michigan – Ann Arbor",
+      "New York University",
+      "University of Texas at Austin",
+      "Carnegie Mellon University",
+      "Duke University",
+      "Northwestern University",
+      "University of Washington",
+      "University of Southern California",
+      "Georgia Institute of Technology",
+      "University of Illinois Urbana-Champaign",
+      "University of Toronto",
+      "ETH Zurich",
+      "National University of Singapore",
+      "University of British Columbia",
+      "London School of Economics",
+      "University College London"
+    ];
 
-  let currentEmail = "";
-  let currentSubject = "";
+    let currentEmail = "";
+    let currentSubject = "";
+    let currentSubjectIsValid = false;
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    currentEmail = params.get("email") || "";
+    // local in-memory reviews: { [subjectName]: [{text, createdAt}] }
+    const localReviews = {};
 
-    // Profile pill
-    const emailEl = document.getElementById("profileEmail");
-    const nameEl = document.getElementById("profileName");
-    const avatarEl = document.getElementById("avatar");
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      currentEmail = params.get("email") || "";
 
-    if (currentEmail) {
-      emailEl.textContent = currentEmail;
-      const namePart = currentEmail.split("@")[0];
-      nameEl.textContent = namePart || "Reviewer";
-      avatarEl.textContent = (namePart || "R").charAt(0).toUpperCase();
-    } else {
-      emailEl.textContent = "Not signed in correctly";
-      nameEl.textContent = "Guest";
-      avatarEl.textContent = "G";
-    }
+      const emailEl = document.getElementById("profileEmail");
+      const nameEl = document.getElementById("profileName");
+      const avatarEl = document.getElementById("avatar");
 
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("input", handleSearchInput);
-    searchInput.addEventListener("focus", handleSearchInput);
-
-    document.addEventListener("click", (e) => {
-      const wrapper = document.querySelector(".search-wrapper");
-      const suggestions = document.getElementById("suggestions");
-      if (!wrapper.contains(e.target)) {
-        suggestions.style.display = "none";
+      if (currentEmail) {
+        emailEl.textContent = currentEmail;
+        const namePart = currentEmail.split("@")[0];
+        nameEl.textContent = namePart || "Reviewer";
+        avatarEl.textContent = (namePart || "R").charAt(0).toUpperCase();
+      } else {
+        emailEl.textContent = "Not signed in correctly";
+        nameEl.textContent = "Guest";
+        avatarEl.textContent = "G";
       }
+
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("input", handleSearchInput);
+      searchInput.addEventListener("focus", handleSearchInput);
+
+      document.addEventListener("click", (e) => {
+        const wrapper = document.querySelector(".search-wrapper");
+        const suggestions = document.getElementById("suggestions");
+        if (!wrapper.contains(e.target)) {
+          suggestions.style.display = "none";
+        }
+      });
     });
-  });
 
-  function normalize(str) {
-    return str.trim().toLowerCase();
-  }
+    function normalize(str) {
+      return str.trim().toLowerCase();
+    }
 
-  function handleSearchInput() {
-    const inputEl = document.getElementById("searchInput");
-    const query = inputEl.value;
-    const suggestionsEl = document.getElementById("suggestions");
-    const statusEl = document.getElementById("searchStatus");
+    function handleSearchInput() {
+      const inputEl = document.getElementById("searchInput");
+      const query = inputEl.value;
+      const suggestionsEl = document.getElementById("suggestions");
+      const statusEl = document.getElementById("searchStatus");
 
-    const trimmed = query.trim();
-    const norm = normalize(trimmed);
+      const trimmed = query.trim();
+      const norm = normalize(trimmed);
 
-    // no text
-    if (!trimmed) {
-      suggestionsEl.style.display = "none";
+      if (!trimmed) {
+        suggestionsEl.style.display = "none";
+        suggestionsEl.innerHTML = "";
+        statusEl.textContent =
+          "Type to search known subjects. Valid subjects have a ✓. You can also create a new subject.";
+        statusEl.className = "search-status";
+        return;
+      }
+
+      const matches = SUBJECTS.filter((s) => normalize(s).includes(norm));
+      const exact = SUBJECTS.find((s) => normalize(s) === norm);
+
+      if (exact) {
+        statusEl.textContent = `Valid subject ✓ "${exact}"`;
+        statusEl.className = "search-status valid";
+      } else {
+        statusEl.textContent = `New subject – not in list yet. You can create it.`;
+        statusEl.className = "search-status new";
+      }
+
       suggestionsEl.innerHTML = "";
-      statusEl.textContent =
-        "Type to search known subjects. Valid subjects have a ✓. You can also create a new subject.";
-      statusEl.className = "search-status";
-      return;
+
+      matches.slice(0, 8).forEach((subj) => {
+        const item = document.createElement("div");
+        item.className = "suggestion-item";
+        item.onclick = () => selectSubject(subj, true);
+
+        const label = document.createElement("div");
+        label.className = "suggestion-label";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = subj;
+
+        const tag = document.createElement("span");
+        tag.className = "suggestion-tag";
+        tag.textContent = "valid";
+
+        label.appendChild(nameSpan);
+        label.appendChild(tag);
+
+        const icon = document.createElement("span");
+        icon.className = "suggestion-icon";
+        icon.textContent = "✓";
+
+        item.appendChild(label);
+        item.appendChild(icon);
+        suggestionsEl.appendChild(item);
+      });
+
+      if (!exact) {
+        const createItem = document.createElement("div");
+        createItem.className = "suggestion-item suggestion-create";
+        createItem.onclick = () => selectSubject(trimmed, false);
+
+        const label = document.createElement("div");
+        label.className = "suggestion-label";
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = `Create new subject: "${trimmed}"`;
+
+        label.appendChild(textSpan);
+
+        const icon = document.createElement("span");
+        icon.className = "suggestion-icon";
+        icon.textContent = "➕";
+
+        createItem.appendChild(label);
+        createItem.appendChild(icon);
+        suggestionsEl.appendChild(createItem);
+      }
+
+      suggestionsEl.style.display = "block";
     }
 
-    // find matches + exact
-    const matches = SUBJECTS.filter((s) => normalize(s).includes(norm));
-    const exact = SUBJECTS.find((s) => normalize(s) === norm);
+    function selectSubject(name, isValid) {
+      currentSubject = name;
+      currentSubjectIsValid = isValid;
 
-    // status
-    if (exact) {
-      statusEl.textContent = `Valid subject ✓ "${exact}"`;
-      statusEl.className = "search-status valid";
-    } else {
-      statusEl.textContent = `New subject – not in list yet. You can create it.`;
-      statusEl.className = "search-status new";
+      const input = document.getElementById("searchInput");
+      const suggestionsEl = document.getElementById("suggestions");
+      const statusEl = document.getElementById("searchStatus");
+
+      input.value = name;
+      suggestionsEl.style.display = "none";
+
+      if (isValid) {
+        statusEl.textContent = `Valid subject ✓ "${name}" selected.`;
+        statusEl.className = "search-status valid";
+      } else {
+        statusEl.textContent =
+          `New subject "${name}" created locally. Submit for validation if this is a real subject.`;
+        statusEl.className = "search-status new";
+      }
+
+      renderSubjectView();
     }
 
-    // build dropdown
-    suggestionsEl.innerHTML = "";
+    function renderSubjectView() {
+      const container = document.getElementById("feedContent");
+      if (!currentSubject) {
+        container.className = "feed-placeholder";
+        container.textContent =
+          "After you pick a subject, its review page will appear here.";
+        return;
+      }
 
-    // 1) show up to 8 matching valid subjects
-    matches.slice(0, 8).forEach((subj) => {
-      const item = document.createElement("div");
-      item.className = "suggestion-item";
-      item.onclick = () => selectSubject(subj, true);
+      const reviews = localReviews[currentSubject] || [];
 
-      const label = document.createElement("div");
-      label.className = "suggestion-label";
+      container.className = "";
+      container.innerHTML = `
+        <div class="subject-card">
+          <div class="subject-header-row">
+            <div class="subject-title-block">
+              <div class="subject-name">${currentSubject}</div>
+              <div class="subject-meta">
+                ${
+                  currentSubjectIsValid
+                    ? '<span class="badge-verified">✓ Verified subject</span>'
+                    : '<span class="badge-unverified">Unverified subject</span>'
+                }
+                <span>5.0 · early prototype</span>
+              </div>
+            </div>
+            <div class="validation-actions">
+              <div class="subject-stars">★★★★★</div>
+              ${
+                currentSubjectIsValid
+                  ? '<div class="validation-msg">From our initial curated list of universities.</div>'
+                  : `<button id="validationButton" class="btn-validate">
+                       Submit for validation
+                     </button>
+                     <div id="validationMsg" class="validation-msg">
+                       Not yet approved. Tell us this is a real subject.
+                     </div>`
+              }
+            </div>
+          </div>
 
-      const nameSpan = document.createElement("span");
-      nameSpan.textContent = subj;
+          <div class="reviews-section-title">Reviews</div>
+          <div class="review-list" id="reviewList">
+            ${
+              reviews.length === 0
+                ? '<div class="review-empty">No reviews for this subject yet. Be the first to write one.</div>'
+                : reviews
+                    .map(
+                      (r) => `
+                <article class="review-card">
+                  <div class="review-card-header">
+                    <span class="review-stars">★★★★★</span>
+                    <span class="review-time">${r.createdAt}</span>
+                  </div>
+                  <div class="review-text">${escapeHtml(r.text)}</div>
+                </article>`
+                    )
+                    .join("")
+            }
+          </div>
 
-      const tag = document.createElement("span");
-      tag.className = "suggestion-tag";
-      tag.textContent = "valid";
+          <button id="writeReviewToggle" class="write-review-toggle">
+            <span>✏️</span><span>Write a review</span>
+          </button>
 
-      label.appendChild(nameSpan);
-      label.appendChild(tag);
+          <div id="writeReviewCard" class="write-review-card">
+            <div class="write-stars-row">★★★★★</div>
+            <div class="write-textarea-wrapper">
+              <textarea id="reviewText" class="write-textarea" placeholder="Type your Review..."></textarea>
+              <div class="write-toolbar-row">
+                <div class="write-toolbar">
+                  <span><b>B</b></span>
+                  <span><i>i</i></span>
+                  <span>🔗</span>
+                  <span>𝘴</span>
+                  <span>&lt;/&gt;</span>
+                  <span>Aᵃ</span>
+                  <span>⚠</span>
+                  <span>T</span>
+                  <span>•</span>
+                  <span>1.</span>
+                </div>
+                <button id="writeReviewPost" class="write-post-btn">Post</button>
+              </div>
+              <div id="writeError" class="write-error"></div>
+            </div>
+          </div>
+        </div>
+      `;
 
-      const icon = document.createElement("span");
-      icon.className = "suggestion-icon";
-      icon.textContent = "✓";
+      // attach listeners for the newly created elements
+      const toggleBtn = document.getElementById("writeReviewToggle");
+      const card = document.getElementById("writeReviewCard");
+      const postBtn = document.getElementById("writeReviewPost");
+      const validationBtn = document.getElementById("validationButton");
 
-      item.appendChild(label);
-      item.appendChild(icon);
-      suggestionsEl.appendChild(item);
-    });
+      if (toggleBtn && card) {
+        toggleBtn.addEventListener("click", () => {
+          card.style.display = card.style.display === "block" ? "none" : "block";
+        });
+      }
 
-    // 2) ALWAYS show "create subject" option when there is text typed
-    if (!exact) {
-      const createItem = document.createElement("div");
-      createItem.className = "suggestion-item suggestion-create";
-      createItem.onclick = () => selectSubject(trimmed, false);
+      if (postBtn) {
+        postBtn.addEventListener("click", handlePostReview);
+      }
 
-      const label = document.createElement("div");
-      label.className = "suggestion-label";
-
-      const textSpan = document.createElement("span");
-      textSpan.textContent = `Create new subject: "${trimmed}"`;
-
-      label.appendChild(textSpan);
-
-      const icon = document.createElement("span");
-      icon.className = "suggestion-icon";
-      icon.textContent = "➕";
-
-      createItem.appendChild(label);
-      createItem.appendChild(icon);
-      suggestionsEl.appendChild(createItem);
+      if (validationBtn) {
+        validationBtn.addEventListener("click", handleValidationSubmit);
+      }
     }
 
-    suggestionsEl.style.display = "block";
-  }
+    function handlePostReview() {
+      const textEl = document.getElementById("reviewText");
+      const errorEl = document.getElementById("writeError");
+      const text = (textEl.value || "").trim();
 
-  function selectSubject(name, isValid) {
-    currentSubject = name;
-    const input = document.getElementById("searchInput");
-    const suggestionsEl = document.getElementById("suggestions");
-    const statusEl = document.getElementById("searchStatus");
-    const placeholderFeed = document.getElementById("feedPlaceholder");
+      if (!text) {
+        errorEl.textContent = "Please write something before posting.";
+        return;
+      }
 
-    input.value = name;
-    suggestionsEl.style.display = "none";
+      errorEl.textContent = "";
 
-    if (isValid) {
-      statusEl.textContent = `Valid subject ✓ "${name}" selected. (Later we'll load its reviews here.)`;
-      statusEl.className = "search-status valid";
-    } else {
-      statusEl.textContent = `New subject "${name}" created locally. In future this will be saved to the database.`;
-      statusEl.className = "search-status new";
+      if (!localReviews[currentSubject]) {
+        localReviews[currentSubject] = [];
+      }
+
+      const now = new Date();
+      const timeLabel = now.toLocaleString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+        month: "short",
+        day: "numeric"
+      });
+
+      localReviews[currentSubject].unshift({
+        text,
+        createdAt: `Just now · ${timeLabel}`
+      });
+
+      textEl.value = "";
+      renderSubjectView();
+      const card = document.getElementById("writeReviewCard");
+      if (card) card.style.display = "block";
     }
 
-    placeholderFeed.textContent =
-      `You selected the subject "${name}". In the full version, this area will show its reviews, ratings, and tags.`;
-  }
-
-  function goToProfile() {
-    if (!currentEmail) {
-      window.location.href = "profile.html";
-      return;
+    function handleValidationSubmit() {
+      const btn = document.getElementById("validationButton");
+      const msg = document.getElementById("validationMsg");
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Submitted";
+      }
+      if (msg) {
+        msg.textContent = "This subject has been submitted to the admin for validation.";
+      }
     }
-    window.location.href =
-      "profile.html?email=" + encodeURIComponent(currentEmail);
-  }
 
-  function logout() {
-    window.location.href = "index.html";
-  }
-</script>
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
 
+    function goToProfile() {
+      if (!currentEmail) {
+        window.location.href = "profile.html";
+        return;
+      }
+      window.location.href = "profile.html?email=" + encodeURIComponent(currentEmail);
+    }
+
+    function logout() {
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
