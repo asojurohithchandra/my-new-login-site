@@ -404,10 +404,17 @@
     .review-stars {
       color: #fbbf24;
       font-size: 13px;
+      display: inline-flex;
+      gap: 1px;
     }
 
-    .review-time {
-      font-size: 11px;
+    .review-stars .star.small {
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .review-stars .star.small.filled {
+      color: #fbbf24;
     }
 
     .review-text {
@@ -455,10 +462,47 @@
     }
 
     .write-stars-row {
-      text-align: center;
-      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    #starContainer {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .star {
+      font-size: 22px;
+      color: #d1d5db;
+      cursor: pointer;
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    .star.filled {
       color: #fbbf24;
-      font-size: 20px;
+    }
+
+    .star:hover {
+      transform: translateY(-1px);
+    }
+
+    .rating-value {
+      font-size: 13px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .rating-slider-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .rating-slider {
+      width: 180px;
     }
 
     .write-textarea-wrapper {
@@ -496,7 +540,12 @@
     }
 
     .write-toolbar span {
-      cursor: default;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .write-toolbar span:hover {
+      color: #4b5563;
     }
 
     .write-post-btn {
@@ -749,8 +798,9 @@
     let currentEmail = "";
     let currentSubject = "";
     let currentSubjectIsValid = false;
+    let currentRating = 5.0;
 
-    // local in-memory reviews: { [subjectName]: [{text, createdAt}] }
+    // local in-memory reviews: { [subjectName]: [{text, rating, createdAt}] }
     const localReviews = {};
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -918,7 +968,7 @@
                     ? '<span class="badge-verified">✓ Verified subject</span>'
                     : '<span class="badge-unverified">Unverified subject</span>'
                 }
-                <span>5.0 · early prototype</span>
+                <span>Early prototype ratings</span>
               </div>
             </div>
             <div class="validation-actions">
@@ -946,8 +996,8 @@
                       (r) => `
                 <article class="review-card">
                   <div class="review-card-header">
-                    <span class="review-stars">★★★★★</span>
-                    <span class="review-time">${r.createdAt}</span>
+                    <span class="review-stars">${renderStarsHTML(r.rating)}</span>
+                    <span class="review-time">${r.createdAt} · ${r.rating.toFixed(1)} / 5.0</span>
                   </div>
                   <div class="review-text">${escapeHtml(r.text)}</div>
                 </article>`
@@ -961,21 +1011,29 @@
           </button>
 
           <div id="writeReviewCard" class="write-review-card">
-            <div class="write-stars-row">★★★★★</div>
+            <div class="write-stars-row">
+              <div id="starContainer">
+                <span class="star" data-star="1">★</span>
+                <span class="star" data-star="2">★</span>
+                <span class="star" data-star="3">★</span>
+                <span class="star" data-star="4">★</span>
+                <span class="star" data-star="5">★</span>
+              </div>
+              <span id="ratingValueText" class="rating-value">5.0 / 5.0</span>
+            </div>
+            <div class="rating-slider-wrapper">
+              <input id="ratingSlider" class="rating-slider" type="range" min="1" max="5" step="0.1" value="5" />
+            </div>
+
             <div class="write-textarea-wrapper">
               <textarea id="reviewText" class="write-textarea" placeholder="Type your Review..."></textarea>
               <div class="write-toolbar-row">
                 <div class="write-toolbar">
-                  <span><b>B</b></span>
-                  <span><i>i</i></span>
-                  <span>🔗</span>
-                  <span>𝘴</span>
-                  <span>&lt;/&gt;</span>
-                  <span>Aᵃ</span>
-                  <span>⚠</span>
-                  <span>T</span>
-                  <span>•</span>
-                  <span>1.</span>
+                  <span data-action="bold"><b>B</b></span>
+                  <span data-action="italic"><i>i</i></span>
+                  <span data-action="link">🔗</span>
+                  <span data-action="bullet">•</span>
+                  <span data-action="number">1.</span>
                 </div>
                 <button id="writeReviewPost" class="write-post-btn">Post</button>
               </div>
@@ -983,7 +1041,7 @@
             </div>
           </div>
         </div>
-      `;
+      ";
 
       // attach listeners for the newly created elements
       const toggleBtn = document.getElementById("writeReviewToggle");
@@ -1004,6 +1062,58 @@
       if (validationBtn) {
         validationBtn.addEventListener("click", handleValidationSubmit);
       }
+
+      initRatingControls();
+      initToolbar();
+    }
+
+    function initRatingControls() {
+      const stars = Array.from(document.querySelectorAll("#starContainer .star"));
+      const slider = document.getElementById("ratingSlider");
+      const valueText = document.getElementById("ratingValueText");
+      if (!stars.length || !slider || !valueText) return;
+
+      function apply(r) {
+        currentRating = Math.min(5, Math.max(1, r));
+        updateStarsDisplay(stars, currentRating);
+        valueText.textContent = currentRating.toFixed(1) + " / 5.0";
+        slider.value = String(currentRating);
+      }
+
+      stars.forEach((star, idx) => {
+        const starValue = idx + 1;
+        star.addEventListener("mouseenter", () => {
+          updateStarsDisplay(stars, starValue);
+          valueText.textContent = starValue.toFixed(1) + " / 5.0";
+        });
+        star.addEventListener("click", () => apply(starValue));
+      });
+
+      const starContainer = document.getElementById("starContainer");
+      starContainer.addEventListener("mouseleave", () => {
+        apply(currentRating);
+      });
+
+      slider.addEventListener("input", (e) => {
+        const value = parseFloat(e.target.value);
+        apply(value);
+      });
+
+      apply(5.0);
+    }
+
+    function updateStarsDisplay(stars, rating) {
+      const full = Math.floor(rating);
+      const hasHalf = rating - full >= 0.5;
+      stars.forEach((star, index) => {
+        if (index < full) {
+          star.className = "star filled";
+        } else if (index === full && hasHalf) {
+          star.className = "star filled";
+        } else {
+          star.className = "star";
+        }
+      });
     }
 
     function handlePostReview() {
@@ -1032,6 +1142,7 @@
 
       localReviews[currentSubject].unshift({
         text,
+        rating: currentRating,
         createdAt: `Just now · ${timeLabel}`
       });
 
@@ -1050,6 +1161,71 @@
       }
       if (msg) {
         msg.textContent = "This subject has been submitted to the admin for validation.";
+      }
+    }
+
+    function renderStarsHTML(rating) {
+      const full = Math.floor(rating);
+      const hasHalf = rating - full >= 0.5;
+      let html = "";
+      for (let i = 0; i < 5; i++) {
+        if (i < full) {
+          html += '<span class="star small filled">★</span>';
+        } else if (i === full && hasHalf) {
+          html += '<span class="star small filled">★</span>';
+        } else {
+          html += '<span class="star small">★</span>';
+        }
+      }
+      return html;
+    }
+
+    function initToolbar() {
+      const buttons = document.querySelectorAll(".write-toolbar span[data-action]");
+      const textarea = document.getElementById("reviewText");
+      if (!buttons.length || !textarea) return;
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          applyToolbarAction(textarea, btn.dataset.action);
+        });
+      });
+    }
+
+    function applyToolbarAction(textarea, action) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const value = textarea.value;
+      const selected = value.slice(start, end);
+
+      function replace(newText) {
+        textarea.value = value.slice(0, start) + newText + value.slice(end);
+        textarea.focus();
+        textarea.selectionStart = start;
+        textarea.selectionEnd = start + newText.length;
+      }
+
+      if (action === "bold") {
+        replace(`**${selected || "bold text"}**`);
+      } else if (action === "italic") {
+        replace(`*${selected || "italic text"}*`);
+      } else if (action === "link") {
+        const url = prompt("Enter URL:", "https://");
+        if (!url) return;
+        const label = selected || "link text";
+        replace(`[${label}](${url})`);
+      } else if (action === "bullet") {
+        const lines = (selected || "bullet item")
+          .split("\n")
+          .map((l) => (l ? "- " + l : l))
+          .join("\n");
+        replace(lines);
+      } else if (action === "number") {
+        const lines = (selected || "numbered item")
+          .split("\n")
+          .map((l, idx) => (l ? `${idx + 1}. ${l}` : l))
+          .join("\n");
+        replace(lines);
       }
     }
 
