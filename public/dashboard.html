@@ -338,6 +338,15 @@
       font-size: 18px;
     }
 
+    /* make the subject-level stars bigger */
+    .subject-stars .star.small {
+      font-size: 18px;
+      color: #d1d5db;
+    }
+    .subject-stars .star.small.filled {
+      color: #fbbf24;
+    }
+
     .validation-actions {
       display: flex;
       flex-direction: column;
@@ -364,8 +373,12 @@
     .validation-msg {
       font-size: 11px;
       color: #6b7280;
-      max-width: 180px;
+      max-width: 220px;
       text-align: right;
+    }
+
+    .rating-summary {
+      font-weight: 500;
     }
 
     /* Reviews list */
@@ -956,6 +969,16 @@
 
       const reviews = localReviews[currentSubject] || [];
 
+      // simple average (all reviews equal weight)
+      const avgRating =
+        reviews.length > 0
+          ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length
+          : 0;
+
+      const avgLabel = reviews.length
+        ? `${avgRating.toFixed(1)} / 5.0 · ${reviews.length} review${reviews.length > 1 ? "s" : ""}`
+        : "No ratings yet – be the first.";
+
       container.className = "";
       container.innerHTML = `
         <div class="subject-card">
@@ -972,7 +995,8 @@
               </div>
             </div>
             <div class="validation-actions">
-              <div class="subject-stars">★★★★★</div>
+              <div class="subject-stars">${renderStarsHTML(avgRating)}</div>
+              <div class="validation-msg rating-summary">${avgLabel}</div>
               ${
                 currentSubjectIsValid
                   ? '<div class="validation-msg">From our initial curated list of universities.</div>'
@@ -1041,7 +1065,7 @@
             </div>
           </div>
         </div>
-      `;   <!-- ✅ backtick here, not a quote -->
+      `;
 
       // attach listeners for the newly created elements
       const toggleBtn = document.getElementById("writeReviewToggle");
